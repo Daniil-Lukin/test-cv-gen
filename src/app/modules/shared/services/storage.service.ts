@@ -1,65 +1,49 @@
 import { Injectable } from '@angular/core';
-import { LocalUser } from '../interfaces/local-user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StorageService {
-  private userData: LocalUser = {
-    jwt: null,
-    lang: null,
-  };
-  private isLocal: boolean | null = null;
+  private jwt: string;
+  private lang: string;
 
   constructor() {}
 
   private setLocalStorageUser(): void {
-    localStorage.setItem('user', JSON.stringify(this.userData));
+    localStorage.setItem('jwt', this.jwt);
+    localStorage.setItem('lang', this.lang);
   }
 
   private setSessionStorageUser(): void {
-    sessionStorage.setItem('user', JSON.stringify(this.userData));
+    sessionStorage.setItem('jwt', this.jwt);
+    sessionStorage.setItem('lang', this.lang);
   }
 
-  setUser(token: string, isLocal: boolean, lang: string = 'en_US'): void {
+  public setUser(
+    token: string,
+    rememberMe: boolean,
+    lang: string = 'en_US'
+  ): void {
     this.jwt = token;
     this.lang = lang;
-    this.isLocal = isLocal
-    if(isLocal) {
+    if (rememberMe) {
       this.setLocalStorageUser();
     } else {
       this.setSessionStorageUser();
     }
   }
 
-  removeUser() {
-    if(this.isLocal === null) {
-      return
-    } else {
-      this.jwt = null;
-      this.lang = null;
-      if(this.isLocal) {
-        localStorage.removeItem('user');
-      } else {
-        sessionStorage.removeItem('user');
-      }
-      this.isLocal = null;
-    }
+  public removeUser(): void {
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('lang');
+    sessionStorage.removeItem('jwt');
+    sessionStorage.removeItem('lang');
+    this.jwt = '';
+    this.lang = '';
   }
 
-  public get jwt(): string | null {
-    return this.jwt;
-  }
-
-  public get lang(): string | null {
-    return this.lang;
-  }
-
-  set jwt(token: string | null) {
-    this.userData.jwt = token;
-  }
-
-  set lang(language: string | null) {
-    this.userData.lang = language;
+  public setUserData(jwt: string, lang: string): void {
+    this.jwt = jwt;
+    this.lang = lang;
   }
 }

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { StorageService } from 'src/app/modules/shared/services/storage.service';
 import { AuthService } from '../../services/auth.service';
 
@@ -12,28 +13,41 @@ import { AuthService } from '../../services/auth.service';
 export class AuthComponent implements OnInit {
   public authForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private storageService: StorageService) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private storageService: StorageService,
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit(): void {
     this.authForm = this.fb.group({
-      email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required, Validators.minLength(6)]],
+      email: [null, Validators.compose([Validators.required, Validators.email])],
+      password: [null, Validators.compose([Validators.required, Validators.minLength(6)])],
       remember: [true],
-    });
+    }); //Validator compose
   }
 
   submitForm(): void {
+    this.authForm.markAllAsTouched();
     if (this.authForm.valid) {
-      this.authService.signIn(this.email, this.password).subscribe((response) => {
-        this.storageService.setUser(response.jwt, this.remember)
-      })
+      this.authService
+        .signIn(this.email, this.password)
+        .subscribe((response) => {
+          this.storageService.setUser(
+            response.jwt,
+            this.remember,
+            this.translateService.store.currentLang
+          );
+        });
+    }
+  }
+
+  localizationButtonClick() {
+    if (this.translateService.store.currentLang === 'en') {
+      this.translateService.use('ru');
     } else {
-      Object.values(this.authForm.controls).forEach((control) => {
-        if (control.invalid) {
-          control.markAsDirty();
-          control.updateValueAndValidity({ onlySelf: true });
-        }
-      });
+      this.translateService.use('en');
     }
   }
 

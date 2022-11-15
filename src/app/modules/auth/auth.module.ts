@@ -8,6 +8,8 @@ import { NzButtonModule } from 'ng-zorro-antd/button'
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegistrationComponent } from './components/registration/registration.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 
 
@@ -21,6 +23,8 @@ import { RegistrationComponent } from './components/registration/registration.co
     NzCheckboxModule,
     ReactiveFormsModule,
     AuthRoutingModule,
+    TranslateModule,
+    NzIconModule,
   ]
 })
 export class AuthModule { }

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { repeatValidator } from '../../extensions/passwordRepeatValidator';
+import { equalFieldsValidator } from '../../extensions/passwordRepeatValidator';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -11,34 +11,28 @@ import { AuthService } from '../../services/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegistrationComponent implements OnInit {
-  public registrationForm!: FormGroup;
+  public registrationForm: FormGroup;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
-      userName: [null, [Validators.required]],
-      email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required, Validators.minLength(6)]],
+      userName: [null, Validators.compose([Validators.required])],
+      email: [null, Validators.compose([Validators.required, Validators.email])],
+      password: [null, Validators.compose([Validators.required, Validators.minLength(6)])],
       passwordRepeat: [
         null,
-        [Validators.required, repeatValidator('password')],
+        Validators.compose([Validators.required, equalFieldsValidator('password')]),
       ],
     });
   }
 
   submitForm(): void {
+    this.registrationForm.markAllAsTouched();
     if (this.registrationForm.valid) {
       this.authService
         .registrate(this.userName, this.email, this.password)
-        .subscribe(() => this.router.navigate(['auth']));
-    } else {
-      Object.values(this.registrationForm.controls).forEach((control) => {
-        if (control.invalid) {
-          control.markAsDirty();
-          control.updateValueAndValidity({ onlySelf: true });
-        }
-      });
+        .subscribe(() => this.router.navigate(['signin']));
     }
   }
 

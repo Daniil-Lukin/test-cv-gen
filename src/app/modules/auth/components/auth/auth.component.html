@@ -1,31 +1,61 @@
 <div class="form-container">
-  <form nz-form [formGroup]="authForm" class="login-form" (ngSubmit)="submitForm()">
+  <form
+    nz-form
+    [formGroup]="authForm"
+    class="login-form"
+    (ngSubmit)="submitForm()"
+  >
     <nz-form-item>
-      <nz-form-control nzErrorTip="Please input your email!">
+      <nz-form-control [nzErrorTip]="'auth.errors.emailError' | translate">
         <nz-input-group nzPrefixIcon="user">
-          <input type="text" nz-input formControlName="email" placeholder="Email" />
+          <input
+            type="text"
+            nz-input
+            formControlName="email"
+            [placeholder]="'auth.placeholders.email' | translate"
+          />
         </nz-input-group>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-control nzErrorTip="Please input your Password!">
+      <nz-form-control [nzErrorTip]="'auth.errors.passwordError' | translate">
         <nz-input-group nzPrefixIcon="lock">
-          <input type="password" nz-input formControlName="password" placeholder="Password" />
+          <input
+            type="password"
+            nz-input
+            formControlName="password"
+            [placeholder]="'auth.placeholders.password' | translate"
+          />
         </nz-input-group>
       </nz-form-control>
     </nz-form-item>
     <div nz-row class="login-form-margin">
       <div nz-col [nzSpan]="12">
         <label nz-checkbox formControlName="remember">
-          <span>Remember me</span>
+          <label>{{ "auth.links.remember" | translate }}</label>
         </label>
       </div>
       <div nz-col [nzSpan]="12">
-        <a class="login-form-forgot">Forgot password</a>
+        <a class="login-form-forgot">{{ "auth.links.forgot" | translate }}</a>
       </div>
     </div>
-    <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Log in</button>
-    Or
-    <a routerLink="/registration">register now!</a>
+    <button
+      nz-button
+      class="login-form-button login-form-margin"
+      [nzType]="'primary'"
+    >
+      {{ "auth.buttons.login" | translate }}
+    </button>
+    {{ "auth.label" | translate }}
+    <a routerLink="/registration">{{ "auth.links.registrate" | translate }}</a>
   </form>
 </div>
+<div class="button-container">
+  <button id="localization">
+    <span nz-icon nzType="global" nzTheme="outline"></span>
+  </button>
+  <button id="question">
+    <span nz-icon nzType="question" nzTheme="outline"></span>
+  </button>
+</div>
+

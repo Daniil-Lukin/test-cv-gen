@@ -5,7 +5,7 @@ import { CanActivate } from '@angular/router';
 })
 export class AuthGuard implements CanActivate {
   canActivate(): boolean {
-    if(localStorage.getItem('user') || sessionStorage.getItem('user')) {
+    if(localStorage.getItem('jwt') || sessionStorage.getItem('jwt')) {
       return true;
     } else {
       return false;
