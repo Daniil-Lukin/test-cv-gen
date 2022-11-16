@@ -7,7 +7,12 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './modules/auth/auth.module';
-import { MissingTranslationHandler, TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import {
+  MissingTranslationHandler,
+  TranslateLoader,
+  TranslateModule,
+  TranslateService,
+} from '@ngx-translate/core';
 import { HttpLoaderFactory } from './modules/shared/extensions/httpLoaderFactory';
 import { MissingTranslationService } from './modules/shared/extensions/translationErrorHandler';
 import { en_US, NZ_I18N, ru_RU } from 'ng-zorro-antd/i18n';
@@ -20,9 +25,7 @@ registerLocaleData(en);
 registerLocaleData(ru);
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -43,34 +46,43 @@ registerLocaleData(ru);
       useDefaultLang: false,
     }),
   ],
-  providers: [{
-    provide: APP_INITIALIZER,
-    useFactory: (storageService: StorageService) => () => {
-      const jwtTokenLocal = localStorage.getItem('jwt');
-      const jwtTokenSession = sessionStorage.getItem('jwt');
-      if(jwtTokenLocal) {
-        storageService.setUserData(jwtTokenLocal, localStorage.getItem('lang'))
-      } if(jwtTokenSession) {
-        storageService.setUserData(jwtTokenSession, sessionStorage.getItem('lang'))
-      }
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (storageService: StorageService) => () => {
+        const jwtTokenLocal = localStorage.getItem('jwt');
+        const jwtTokenSession = sessionStorage.getItem('jwt');
+        if (jwtTokenLocal) {
+          storageService.setUserData(
+            jwtTokenLocal,
+            localStorage.getItem('lang')
+          );
+        }
+        if (jwtTokenSession) {
+          storageService.setUserData(
+            jwtTokenSession,
+            sessionStorage.getItem('lang')
+          );
+        }
+      },
+      deps: [StorageService],
+      multi: true,
     },
-    deps: [StorageService],
-    multi: true
-  },
-  {
-    provide: NZ_I18N,
-    useFactory: (localId: string) => {
-      switch (localId) {
-        case 'en':
-          return en_US;
-        case 'ru':
-          return ru_RU;
-        default:
-          return en_US;
-      }
+    {
+      provide: NZ_I18N,
+      useFactory: (localId: string) => {
+        switch (localId) {
+          case 'en':
+            return en_US;
+          case 'ru':
+            return ru_RU;
+          default:
+            return en_US;
+        }
+      },
+      deps: [LOCALE_ID],
     },
-    deps: [LOCALE_ID]
-}],
-  bootstrap: [AppComponent]
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
