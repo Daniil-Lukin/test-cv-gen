@@ -1,18 +1,88 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthModule } from './modules/auth/auth.module';
+import {
+  MissingTranslationHandler,
+  TranslateLoader,
+  TranslateModule,
+  TranslateService,
+} from '@ngx-translate/core';
+import { HttpLoaderFactory } from './modules/shared/extensions/httpLoaderFactory';
+import { MissingTranslationService } from './modules/shared/extensions/translationErrorHandler';
+import { en_US, NZ_I18N, ru_RU } from 'ng-zorro-antd/i18n';
+import en from '@angular/common/locales/en';
+import ru from '@angular/common/locales/ru';
+import { registerLocaleData } from '@angular/common';
+import { StorageService } from './modules/shared/services/storage.service';
+import { firstValueFrom, of } from 'rxjs';
+registerLocaleData(en);
+registerLocaleData(ru);
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    AuthModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+      missingTranslationHandler: {
+        provide: MissingTranslationHandler,
+        useClass: MissingTranslationService,
+      },
+      useDefaultLang: false,
+    }),
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (storageService: StorageService) => () => {
+        const jwtTokenLocal = localStorage.getItem('jwt');
+        const jwtTokenSession = sessionStorage.getItem('jwt');
+        if (jwtTokenLocal) {
+          storageService.setUserData(
+            jwtTokenLocal,
+            localStorage.getItem('lang')
+          );
+        }
+        if (jwtTokenSession) {
+          storageService.setUserData(
+            jwtTokenSession,
+            sessionStorage.getItem('lang')
+          );
+        }
+      },
+      deps: [StorageService],
+      multi: true,
+    },
+    {
+      provide: NZ_I18N,
+      useFactory: (localId: string) => {
+        switch (localId) {
+          case 'en':
+            return en_US;
+          case 'ru':
+            return ru_RU;
+          default:
+            return en_US;
+        }
+      },
+      deps: [LOCALE_ID],
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

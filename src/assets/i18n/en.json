@@ -1,0 +1,26 @@
+{
+  "auth": {
+    "placeholders": {
+      "email": "Email",
+      "password": "Password",
+      "repeatPassword": "Repeat password",
+      "name": "Name"
+    },
+    "buttons": {
+      "login": "Log in",
+      "registrate": "Registrate"
+    },
+    "links": {
+      "remember": "Remember me",
+      "forgot": "Forgot password",
+      "registrate": "register now!"
+    },
+    "label": "Or",
+    "errors": {
+      "emailError": "Please input your email!",
+      "passwordError": "Please input your Password!",
+      "passwordRepeat": "Please repeat your Password correctly!",
+      "nameError": "Please input your name!"
+    }
+  }
+}

@@ -1,0 +1,64 @@
+<div class="form-container">
+  <form
+    nz-form
+    [formGroup]="registrationForm"
+    class="login-form"
+    (ngSubmit)="submitForm()"
+  >
+    <nz-form-item>
+      <nz-form-control [nzErrorTip]="'auth.errors.nameError' | translate">
+        <nz-input-group nzPrefixIcon="user">
+          <input
+            type="text"
+            nz-input
+            formControlName="userName"
+            [placeholder]="'auth.placeholders.name' | translate"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control [nzErrorTip]="'auth.errors.emailError' | translate">
+        <nz-input-group nzPrefixIcon="user">
+          <input
+            type="text"
+            nz-input
+            formControlName="email"
+            [placeholder]="'auth.placeholders.email' | translate"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control [nzErrorTip]="'auth.errors.passwordError' | translate">
+        <nz-input-group nzPrefixIcon="lock">
+          <input
+            type="password"
+            nz-input
+            formControlName="password"
+            [placeholder]="'auth.placeholders.password' | translate"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control [nzErrorTip]="'auth.errors.repeatPassword' | translate">
+        <nz-input-group nzPrefixIcon="lock">
+          <input
+            type="password"
+            nz-input
+            formControlName="passwordRepeat"
+            [placeholder]="'auth.placeholders.repeatPassword' | translate"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <button
+      nz-button
+      class="login-form-button login-form-margin"
+      [nzType]="'primary'"
+    >
+      {{ "auth.buttons.registrate" | translate }}
+    </button>
+  </form>
+</div>
