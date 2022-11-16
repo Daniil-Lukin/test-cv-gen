@@ -46,10 +46,12 @@ registerLocaleData(ru);
   providers: [{
     provide: APP_INITIALIZER,
     useFactory: (storageService: StorageService) => () => {
-      if(localStorage.getItem('jwt')) {
-        storageService.setUserData(localStorage.getItem('jwt'), localStorage.getItem('lang'))
-      } if(sessionStorage.getItem('jwt')) {
-        storageService.setUserData(sessionStorage.getItem('jwt'), sessionStorage.getItem('lang'))
+      const jwtTokenLocal = localStorage.getItem('jwt');
+      const jwtTokenSession = sessionStorage.getItem('jwt');
+      if(jwtTokenLocal) {
+        storageService.setUserData(jwtTokenLocal, localStorage.getItem('lang'))
+      } if(jwtTokenSession) {
+        storageService.setUserData(jwtTokenSession, sessionStorage.getItem('lang'))
       }
     },
     deps: [StorageService],
