@@ -1,0 +1,45 @@
+<nz-layout>
+  <nz-header>
+    <div class="logo"></div>
+    <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
+      <li nz-menu-item>
+        <span nz-icon nzType="question-circle" nzTheme="outline"></span>
+      </li>
+      <li nz-menu-item>
+        <span nz-icon nzType="bell" nzTheme="outline"></span>
+      </li>
+      <li nz-menu-item>
+        <span nz-icon nzType="search" nzTheme="outline"></span>
+      </li>
+    </ul>
+  </nz-header>
+  <nz-layout>
+    <nz-sider nzCollapsible nzWidth="12.5rem" nzTheme="light">
+      <ul nz-menu nzMode="inline" class="sider-menu">
+        <li nz-menu-item nzSelected>
+          <span nz-icon nzType="dashboard" nzTheme="outline"></span>
+          <span>Dashboard</span>
+        </li>
+        <li nz-menu-item>
+          <span nz-icon nzType="form" nzTheme="outline"></span>
+          <span>Employees</span>
+        </li>
+        <li nz-menu-item>
+          <span nz-icon nzType="database" nzTheme="outline"></span>
+          <span>Projects</span>
+        </li>
+      </ul>
+    </nz-sider>
+    <nz-layout class="inner-layout">
+      <div class="description-container">
+        <!-- Place for breadcrumbs -->
+        <p>BreadCrumbs</p>
+        <h2>Title</h2>
+        <h3>Description</h3>
+      </div>
+      <nz-content>
+        <router-outlet></router-outlet>
+      </nz-content>
+    </nz-layout>
+  </nz-layout>
+</nz-layout>

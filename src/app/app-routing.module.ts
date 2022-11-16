@@ -11,6 +11,11 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => 
       import('./modules/auth/auth.module').then((m) => m.AuthModule)
+  },
+  {
+    path: 'main',
+    loadChildren: () =>
+      import('./modules/cv-page/cv-page.module').then((m) => m.CvPageModule)
   }
 ];
 
