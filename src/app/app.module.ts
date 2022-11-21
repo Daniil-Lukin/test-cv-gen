@@ -21,6 +21,7 @@ import ru from '@angular/common/locales/ru';
 import { registerLocaleData } from '@angular/common';
 import { StorageService } from './modules/shared/services/storage.service';
 import { firstValueFrom, of } from 'rxjs';
+import { BreadcrumbComponent } from './modules/shared/components/breadcrumb/breadcrumb.component';
 registerLocaleData(en);
 registerLocaleData(ru);
 
@@ -70,7 +71,7 @@ registerLocaleData(ru);
     },
     {
       provide: NZ_I18N,
-      useFactory: (localId: string) => {
+      useFactory: (localId: string) => () => {
         switch (localId) {
           case 'en':
             return en_US;
@@ -82,6 +83,10 @@ registerLocaleData(ru);
       },
       deps: [LOCALE_ID],
     },
+    // {
+    //   provide: LOCALE_ID,
+    //   useFactory: ()
+    // }
   ],
   bootstrap: [AppComponent],
 })

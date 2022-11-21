@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'home/text/smth',
     pathMatch: 'full',
   },
   {
@@ -13,7 +13,7 @@ const routes: Routes = [
       import('./modules/auth/auth.module').then((m) => m.AuthModule)
   },
   {
-    path: 'main',
+    path: 'home/text/smth',
     loadChildren: () =>
       import('./modules/cv-page/cv-page.module').then((m) => m.CvPageModule)
   }

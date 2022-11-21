@@ -1,9 +1,9 @@
 <nz-layout>
   <nz-header>
     <div class="logo"></div>
-    <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
+    <ul nz-menu nzSelectable="false" nzTheme="dark" nzMode="horizontal" class="header-menu">
       <li nz-menu-item>
-        <span nz-icon nzType="question-circle" nzTheme="outline"></span>
+        <span nz-icon  nzType="question-circle" nzTheme="outline"></span>
       </li>
       <li nz-menu-item>
         <span nz-icon nzType="bell" nzTheme="outline"></span>
@@ -32,8 +32,7 @@
     </nz-sider>
     <nz-layout class="inner-layout">
       <div class="description-container">
-        <!-- Place for breadcrumbs -->
-        <p>BreadCrumbs</p>
+        <app-breadcrumb></app-breadcrumb>
         <h2>Title</h2>
         <h3>Description</h3>
       </div>

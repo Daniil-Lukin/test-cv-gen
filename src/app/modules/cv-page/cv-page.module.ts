@@ -5,6 +5,8 @@ import { CvPageRoutingModule } from './cv-page-routing.module';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { BreadcrumbComponent } from '../shared/components/breadcrumb/breadcrumb.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -18,6 +20,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzLayoutModule,
     NzMenuModule,
     NzIconModule,
+    SharedModule,
   ]
 })
 export class CvPageModule { }

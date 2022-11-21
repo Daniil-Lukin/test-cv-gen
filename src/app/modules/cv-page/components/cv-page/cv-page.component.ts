@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { BreadcrumbService } from 'src/app/modules/shared/services/breadcrumb.service';
 
 @Component({
   selector: 'app-cv-page',
@@ -8,9 +10,10 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 })
 export class CvPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private breadcrumbService: BreadcrumbService) { }
 
   ngOnInit(): void {
+    
   }
 
 }

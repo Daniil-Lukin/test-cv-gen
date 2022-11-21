@@ -36,4 +36,11 @@ nz-content {
   padding: 1rem 1.5rem;
   height: 8.5rem;
   background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  h2, h3 {
+    margin: 0
+  }
 }
