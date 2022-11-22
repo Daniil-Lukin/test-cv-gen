@@ -3,7 +3,7 @@ import { AfterViewInit, Directive, ElementRef, Input } from '@angular/core';
 @Directive({
   selector: '[appColorChange]'
 })
-export class ColorChangeDirective implements AfterViewInit{
+export class ColorChangeDirective implements AfterViewInit {
   @Input() arrayLength: number;
   @Input() index: number;
 

@@ -85,7 +85,8 @@ registerLocaleData(ru);
     },
     // {
     //   provide: LOCALE_ID,
-    //   useFactory: ()
+    //   useFactory: (translateService) => () => { если в сторедже есть ланг то ставим, если нет, то дефлот
+    // }
     // }
   ],
   bootstrap: [AppComponent],

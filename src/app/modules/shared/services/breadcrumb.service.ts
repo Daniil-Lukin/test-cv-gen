@@ -17,7 +17,6 @@ export class BreadcrumbService {
   }
 
   private routeBuilder(index: number) {
-    console.log(this.urlArray.slice(0,index+1).reduce((acc, curr) => `${acc}/${curr}`));
     return this.urlArray.slice(0,index+1).reduce((acc, curr) => `${acc}/${curr}`)
   }
 

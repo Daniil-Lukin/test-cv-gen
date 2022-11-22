@@ -1,11 +1,11 @@
 <div class="breadcrumb-container">
-  <ng-container *ngFor="let breadcrumb of routerArray; let i = index">
+  <ng-container *ngFor="let breadcrumb of routerArray; let i = index; let last = last">
     <a
-      routerLink="/{{ breadcrumb.navigationUrl }}"
+      [routerLink]="breadcrumb.navigationUrl"
       appColorChange [arrayLength]="routerArray.length" [index]="i"
       >{{ breadcrumb.label | titlecase }}</a
     >
-    <ng-container *ngIf="i < routerArray.length - 1">
+    <ng-container *ngIf="!last">
       <span> / </span>
     </ng-container>
   </ng-container>
