@@ -1,19 +1,23 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { BreadcrumbService } from 'src/app/modules/shared/services/breadcrumb.service';
+import { ForkJoinResponse } from 'src/app/modules/entities/interfaces/fork-join-response';
+import { EntitiesService } from 'src/app/modules/entities/services/entities.service';
 
 @Component({
   selector: 'app-cv-page',
   templateUrl: './cv-page.component.html',
   styleUrls: ['./cv-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CvPageComponent implements OnInit {
-
-  constructor(private router: Router, private breadcrumbService: BreadcrumbService) { }
+  
+  constructor(private entitiesService: EntitiesService) {}
 
   ngOnInit(): void {
+    this.entitiesService
+      .getEntitiesData()
+      .subscribe((value) => {
+        this.entitiesService.setEntitiesData(value);
+      });
     
   }
-
 }

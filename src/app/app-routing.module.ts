@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './modules/shared/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
   {
@@ -15,7 +16,8 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () =>
-      import('./modules/cv-page/cv-page.module').then((m) => m.CvPageModule)
+      import('./modules/cv-page/cv-page.module').then((m) => m.CvPageModule),
+    canActivate: [AuthGuard],
   },
   
 ];

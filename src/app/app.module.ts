@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './modules/auth/auth.module';
 import {
@@ -20,8 +20,7 @@ import en from '@angular/common/locales/en';
 import ru from '@angular/common/locales/ru';
 import { registerLocaleData } from '@angular/common';
 import { StorageService } from './modules/shared/services/storage.service';
-import { firstValueFrom, of } from 'rxjs';
-import { BreadcrumbComponent } from './modules/shared/components/breadcrumb/breadcrumb.component';
+import { JwtInterceptor } from './modules/shared/interceptors/jwt-interceptor.interceptor';
 registerLocaleData(en);
 registerLocaleData(ru);
 
@@ -58,6 +57,7 @@ registerLocaleData(ru);
             jwtTokenLocal,
             localStorage.getItem('lang')
           );
+
         }
         if (jwtTokenSession) {
           storageService.setUserData(
@@ -83,6 +83,11 @@ registerLocaleData(ru);
       },
       deps: [LOCALE_ID],
     },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true,
+    }
     // {
     //   provide: LOCALE_ID,
     //   useFactory: (translateService) => () => { если в сторедже есть ланг то ставим, если нет, то дефлот

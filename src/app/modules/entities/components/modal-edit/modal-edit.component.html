@@ -1,0 +1,10 @@
+<div>
+  <input nz-input [(ngModel)]="newName">
+</div>
+<div *nzModalFooter class="nzModalFooter">
+  <button nz-button nzType="primary" (click)="deleteClick()">Delete</button>
+  <div class="primary_buttons">
+    <button nz-button nzType="default" (click)="destroyModal()">Cancel</button>
+    <button nz-button nzType="primary" (click)="submitClick()">Submit</button>
+  </div>
+</div>

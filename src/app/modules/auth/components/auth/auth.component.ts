@@ -33,18 +33,18 @@ export class AuthComponent implements OnInit {
   submitForm(): void {
     this.authForm.markAllAsTouched();
     if (this.authForm.valid) {
-      // this.authService
-      //   .signIn(this.email, this.password)
-      //   .subscribe((response) => {
-      //     this.storageService.setUser(
-      //       response.jwt,
-      //       this.remember,
-      //       this.translateService.store.currentLang
-      //     );
-      //     this.router.navigate(['main'])
-      //   });
+      this.authService
+        .signIn(this.email, this.password)
+        .subscribe((response) => {
+          this.storageService.setUser(
+            response.jwt,
+            this.remember,
+            this.translateService.store.currentLang
+          );
+          this.router.navigate(['home'])
+        });
     }
-    this.router.navigate(['main'])
+    // this.router.navigate(['home'])
   }
 
   localizationButtonClick() {

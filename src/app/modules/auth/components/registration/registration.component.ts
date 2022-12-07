@@ -32,7 +32,7 @@ export class RegistrationComponent implements OnInit {
     if (this.registrationForm.valid) {
       this.authService
         .registrate(this.userName, this.email, this.password)
-        .subscribe(() => this.router.navigate(['signin']));
+        .subscribe(() => this.router.navigate(['home']));
     }
   }
 

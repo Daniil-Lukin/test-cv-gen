@@ -15,8 +15,8 @@
   </nz-header>
   <nz-layout>
     <nz-sider nzCollapsible nzWidth="12.5rem" nzTheme="light">
-      <ul nz-menu nzMode="inline" class="sider-menu">
-        <li nz-menu-item nzSelected>
+      <ul nz-menu nzMode="inline" nzSelectable="false" class="sider-menu">
+        <li nz-menu-item>
           <span nz-icon nzType="dashboard" nzTheme="outline"></span>
           <span>Entities</span>
           <a [routerLink]="['entities']"></a> 
@@ -28,6 +28,10 @@
         <li nz-menu-item>
           <span nz-icon nzType="database" nzTheme="outline"></span>
           <span>Projects</span>
+        </li>
+        <li nz-menu-item>
+          <span nz-icon nzType="diff" nzTheme="outline"></span>
+          <span>CVs</span>
         </li>
       </ul>
     </nz-sider>

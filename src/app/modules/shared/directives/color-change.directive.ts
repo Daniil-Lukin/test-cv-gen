@@ -4,13 +4,12 @@ import { AfterViewInit, Directive, ElementRef, Input } from '@angular/core';
   selector: '[appColorChange]'
 })
 export class ColorChangeDirective implements AfterViewInit {
-  @Input() arrayLength: number;
-  @Input() index: number;
+  @Input() isLast: boolean;
 
   constructor(private el: ElementRef) {}
 
   ngAfterViewInit(): void {
-    if(this.index === this.arrayLength - 1) {
+    if(this.isLast) {
       this.el.nativeElement.style.color = "black";
     }
   }
