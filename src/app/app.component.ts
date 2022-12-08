@@ -10,7 +10,6 @@ export class AppComponent {
   title = 'cv-gen';
 
   constructor(private translateService: TranslateService) {
-    this.translateService.setDefaultLang('en');
     this.translateService.use('en');
   }
 }

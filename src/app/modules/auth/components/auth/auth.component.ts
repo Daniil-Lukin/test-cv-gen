@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { StorageService } from 'src/app/modules/shared/services/storage.service';
 import { AuthService } from '../../services/auth.service';
@@ -15,6 +16,7 @@ export class AuthComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private router: Router,
     private authService: AuthService,
     private storageService: StorageService,
     private translateService: TranslateService
@@ -39,8 +41,10 @@ export class AuthComponent implements OnInit {
             this.remember,
             this.translateService.store.currentLang
           );
+          this.router.navigate(['home'])
         });
     }
+    // this.router.navigate(['home'])
   }
 
   localizationButtonClick() {

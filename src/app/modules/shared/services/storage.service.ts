@@ -46,4 +46,8 @@ export class StorageService {
     this.jwt = jwt;
     this.lang = lang;
   }
+
+  public getJwt(): string {
+    return this.jwt
+  }
 }
