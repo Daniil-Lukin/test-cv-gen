@@ -5,6 +5,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { NzModalRef } from 'ng-zorro-antd/modal';
+import { Subject } from 'rxjs';
 import { EntitiesService } from '../../services/entities.service';
 
 @Component({
@@ -28,17 +29,16 @@ export class ModalEditComponent {
     } else {
       this.entitiesService.createEntity(this.newName).subscribe();
     }
-    this.destroyModal();
+    this.destroyModal(true);
   }
 
   public deleteClick(): void {
     this.entitiesService
       .deleteEntity(this.id)
-      .subscribe((response) => console.log(response));
-    this.destroyModal();
+    this.destroyModal(true);
   }
 
-  public destroyModal(): void {
-    this.nzModalRef.destroy();
+  public destroyModal(isChanged = false): void {
+    this.nzModalRef.destroy(isChanged);
   }
 }

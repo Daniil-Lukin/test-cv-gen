@@ -5,6 +5,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { EMPTY, map, Subject, switchMap } from 'rxjs';
 import { EntityData } from '../../interfaces/entity-data';
 import { EntitiesService } from '../../services/entities.service';
 import { ModalEditComponent } from '../modal-edit/modal-edit.component';
@@ -21,12 +22,14 @@ export class EntitieComponent implements OnInit {
 
   constructor(
     private entitiesService: EntitiesService,
-    private modalService: NzModalService,
+    private modalService: NzModalService
   ) {}
 
   ngOnInit(): void {
     this.entitiesService.setEntityType();
-    this.entitiesService.getEntity().subscribe((value) => this.entitiesArray = value);
+    this.entitiesService
+      .getEntity()
+      .subscribe((value) => (this.entitiesArray = value));
   }
 
   onEntityClick(id: number, name: string) {
@@ -37,13 +40,13 @@ export class EntitieComponent implements OnInit {
         id: id,
       },
     });
-    modal.afterClose.subscribe(() =>
-      this.entitiesService.getEntityArray().subscribe((data) => {
-        this.entitiesService.updateStoragedData(data)
-        this.entitiesService.getEntity().subscribe((value) => this.entitiesArray = value);
-        console.log('close');
-      })
-    );
+    modal.afterClose.subscribe((isChanged) => {
+      if (isChanged) {
+        this.entitiesService
+          .getEntityArray()
+          .subscribe();
+      }
+    });
   }
 
   onAddClick() {
@@ -51,13 +54,14 @@ export class EntitieComponent implements OnInit {
       nzTitle: `Create new entity`,
       nzContent: ModalEditComponent,
     });
-    modal.afterClose.subscribe(() =>
-      this.entitiesService.getEntityArray().subscribe((data) => {
-        this.entitiesService.updateStoragedData(data)
-        this.entitiesService.getEntity().subscribe((value) => this.entitiesArray = value);
-        console.log('close');
-        console.log(this.entitiesArray);
+    modal.afterClose.pipe(
+      map((isChanged) => {
+        if(isChanged) {
+          console.log(this.entitiesArray);
+          this.entitiesService.getEntityArray().subscribe();
+          console.log(this.entitiesArray);
+        }
       })
-    );
+    ).subscribe();
   }
 }

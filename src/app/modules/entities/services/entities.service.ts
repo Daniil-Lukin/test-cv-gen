@@ -33,7 +33,7 @@ export class EntitiesService {
     responsibilities: new BehaviorSubject([]),
     languages: new BehaviorSubject([]),
   }
-  private entitiesTypes = ['skills', 'responsibilities', 'languages']
+  private entitiesTypes = ['skills', 'responsibilities', 'languages'];
 
   constructor(private httpClient: HttpClient, private router: Router) {}
 
@@ -49,7 +49,12 @@ export class EntitiesService {
       .get<SkillsResponse>(
         `${environment.apiUrl}/${entityType}?pagination%5BwithCount%5D=false`
       )
-      .pipe(map((response) => response.data));
+      .pipe(
+        map((response) => {
+          this.updateStoragedData(response.data, entityType);
+          return response.data;
+          })
+        );
   }
 
   public createEntity(name: string): Observable<SkillsResponse> {
@@ -81,17 +86,18 @@ export class EntitiesService {
       skills: this.getEntityArray('skills'),
       languages: this.getEntityArray('languages'),
       responsibilities: this.getEntityArray('responsibilities'),
-    });
+    })
   }
 
   public setEntitiesData(response: ForkJoinResponse): void {
     for(let type of this.entitiesTypes) {
+      console.log(this.entitiesTypes);
       this.entitiesStorage[type].next(response[type]);
-      console.log(this.entitiesStorage)
+      console.log(this.entitiesStorage);
     }
   }
 
-  public updateStoragedData(
+  private updateStoragedData(
     entityData: EntityData[],
     entityType = this.entityType
   ): void {
