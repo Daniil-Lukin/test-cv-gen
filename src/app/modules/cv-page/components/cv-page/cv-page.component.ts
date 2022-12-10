@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ForkJoinResponse } from 'src/app/modules/entities/interfaces/fork-join-response';
 import { EntitiesService } from 'src/app/modules/entities/services/entities.service';
+import { ProjectService } from 'src/app/modules/projects/services/project.service';
 
 @Component({
   selector: 'app-cv-page',
@@ -9,15 +10,17 @@ import { EntitiesService } from 'src/app/modules/entities/services/entities.serv
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CvPageComponent implements OnInit {
-  
-  constructor(private entitiesService: EntitiesService) {}
+  constructor(
+    private entitiesService: EntitiesService,
+    private projectsService: ProjectService
+  ) {}
 
   ngOnInit(): void {
-    this.entitiesService
-      .getEntitiesData()
-      .subscribe((value) => {
-        this.entitiesService.setEntitiesData(value);
-      });
-    
+    this.entitiesService.getEntitiesData().subscribe((value) => {
+      this.entitiesService.setEntitiesData(value);
+    });
+    this.projectsService
+      .getAllProjectsHTTP()
+      .subscribe((response) => this.projectsService.setProjects(response));
   }
 }
