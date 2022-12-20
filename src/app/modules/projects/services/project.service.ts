@@ -23,6 +23,7 @@ export class ProjectService {
     );
   }
 
+
   public getProjectHTTP(projectID: number): Observable<ProjectToGet> {
     return this.httpClient.get<ProjectToGet>(
       `${environment.apiUrl}/projects/${projectID}`
@@ -37,20 +38,15 @@ export class ProjectService {
     return this.projectsList.find((element) => element.id === projectID);
   }
 
-  public createProject(projectData: ProjectToPost): Observable<ProjectsToGetData> {
+  public createProject(data: ProjectToPost): Observable<ProjectsToGetData> {
     return this.httpClient
-      .put<ProjectsToGetData>(`${environment.apiUrl}/projects`, {
-        projectData,
+      .post<ProjectsToGetData>(`${environment.apiUrl}/projects`, {
+        data
       })
-      .pipe(
-        map((response) => {
-          this.addProject(response);
-          return response;
-        })
-      );
   }
+ 
 //Подумать по поводу takeUntill()
-  public changeProject(
+  public changeProjectHTTP(
     projectData: ProjectToPost,
     projectID: number
   ): Observable<ProjectToGet> {
@@ -60,13 +56,13 @@ export class ProjectService {
       })
       .pipe(
         map((response) => {
-          this.changeValue(response);
+          this.changeProject(response);
           return response;
         })
       );
   }
 
-  public deleteProject(projectID: number): Observable<ProjectToGet> {
+  public deleteProjectHTTP(projectID: number): Observable<ProjectToGet> {
     return this.httpClient
       .delete<ProjectToGet>(`${environment.apiUrl}/projects/${projectID}`)
       .pipe(
@@ -96,7 +92,7 @@ export class ProjectService {
   }
   
 
-  private changeValue(projectData: ProjectToGet) {
+  private changeProject(projectData: ProjectToGet) {
     const index = this.projectsList.indexOf(
       this.projectsList.find(
         (element) => element.id === projectData.data.id
@@ -116,6 +112,7 @@ export class ProjectService {
     for(let index = 0; index < this.projectsList.length; index++) {
       console.log(1);
       DataItemList.push({
+        id: String(this.projectsList[index].id),
         name: this.projectsList[index].attributes.name,
         domain: this.projectsList[index].attributes.domain,
         from: this.projectsList[index].attributes.from,

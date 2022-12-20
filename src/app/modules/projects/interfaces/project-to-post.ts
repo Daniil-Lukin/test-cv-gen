@@ -1,5 +1,4 @@
 export interface ProjectToPost {
-  data: {
     name: string,
     description: string,
     from: Date ,//"YYYY-MM-DD",
@@ -7,5 +6,4 @@ export interface ProjectToPost {
     domain: string,
     skills: string[] | number[],
     internalName: string
-  }
 }

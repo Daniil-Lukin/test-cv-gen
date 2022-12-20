@@ -1,1 +1,94 @@
-<p>project-info works!</p>
+<button nz-button nzType="primary" nzShape="round" (click)="submitForm()">Submit changes</button>
+<form
+  nz-form
+  [formGroup]="projectForm"
+  class="project-form"
+  (ngSubmit)="submitForm()"
+>
+  <!-- Name -->
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]>
+      <nz-form-label nzRequired>Name</nz-form-label>
+      <input
+        nz-input
+        name="name"
+        type="text"
+        id="name"
+        formControlName="name"
+        nzPlaceHolder="Name"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <!-- From -->
+  <nz-form-item>
+    <nz-form-label nzRequired>From</nz-form-label>
+    <nz-date-picker
+      name="from"
+      id="from"
+      formControlName="from"
+    ></nz-date-picker>
+  </nz-form-item>
+  <!-- To -->
+  <nz-form-item>
+    <nz-form-label nzRequired>To</nz-form-label>
+    <nz-date-picker
+      name="to"
+      id="to"
+      formControlName="to"
+    ></nz-date-picker>
+  </nz-form-item>
+  <!-- iternalName -->
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]>
+      <nz-form-label nzRequired>Iternal Name</nz-form-label>
+      <input
+        nz-input
+        name="internalName"
+        id="internalName"
+        formControlName="internalName"
+        type="text"
+        nzPlaceHolder="Iternal Name"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <!-- Domain -->
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]>
+      <nz-form-label nzRequired>Domain</nz-form-label>
+      <input
+        nz-input
+        name="domain"
+        id="domain"
+        formControlName="domain"
+        type="text"
+        nzPlaceHolder="Domain"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <!-- Skills -->
+  <nz-form-item>
+    <nz-form-label nzRequired>Tech Stack</nz-form-label>
+      <nz-select
+        nzMode="tags"
+        nzPlaceHolder="Tech stack"
+        formControlName="skills"
+      >
+        <nz-option
+          *ngFor="let skill of listOfOptions"
+          [nzLabel]="skill.attributes.name"
+          [nzValue]="skill.id"
+        ></nz-option>
+      </nz-select>
+  </nz-form-item>
+  <!-- Description -->
+  <nz-form-item>
+    <nz-form-label nzRequired>Description</nz-form-label>
+      <textarea
+        nz-input
+        nzPlaceHolder="Description"
+        formControlName="description"
+        name="description"
+        [nzAutosize]="{ minRows: 3 }"
+      ></textarea>
+  </nz-form-item>
+</form>

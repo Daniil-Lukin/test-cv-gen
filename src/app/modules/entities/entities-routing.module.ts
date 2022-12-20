@@ -10,15 +10,7 @@ const routes: Routes = [
     component: SelectionPageComponent,
   },
   {
-    path: 'skills',
-    component: EntitieComponent,
-  },
-  {
-    path: 'responsibilities',
-    component: EntitieComponent,
-  },
-  {
-    path: 'languages',
+    path: ':entity',
     component: EntitieComponent,
   },
 ];

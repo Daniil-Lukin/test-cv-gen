@@ -1,3 +1,4 @@
+<button nz-button><a routerLink="new">Create new project</a></button>
 <nz-table #sortTable [nzData]="listOfData" nzTableLayout="fixed">
   <thead>
     <tr>
@@ -12,7 +13,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let data of sortTable.data">
+    <tr *ngFor="let data of sortTable.data" [routerLink]='data.id'>
       <td>{{ data.name }}</td>
       <td>{{ data.domain }}</td>
       <td>{{ data.from }}</td>

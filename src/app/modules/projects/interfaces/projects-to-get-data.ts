@@ -8,7 +8,7 @@ export interface ProjectsToGetData {
       from: Date; //"YYYY-MM-DD",
       to: Date; //"YYYY-MM-DD"
       domain: string;
-      skills: EntityData;
+      skills: EntityData[];
       internalName: string;
     }
 }
