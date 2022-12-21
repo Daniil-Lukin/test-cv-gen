@@ -30,8 +30,9 @@ export class ProjectInfoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.entitiesService.getEntity().subscribe((value) => {
+    this.entitiesService.getEntity('skills').subscribe((value) => {
       this.listOfOptions = value;
+      console.log(value);
     });
     this.projectForm = this.formBuilder.group({
       name: [null, Validators.compose([Validators.required])],
@@ -45,17 +46,30 @@ export class ProjectInfoComponent implements OnInit {
     if (this.id != 'new') {
       const projectData = this.projectService.getProject(Number(this.id));
       Object.keys(projectData.attributes).forEach((key) => {
-        this.projectForm.patchValue({[key]: projectData.attributes[key]});
+        if(key !='skills') {
+          this.projectForm.patchValue({[key]: projectData.attributes[key]});
+        } else {
+          const arrayOfSkillsId = projectData.attributes.skills.data.map((attr)=> attr.id);
+          this.projectForm.patchValue({[key]: arrayOfSkillsId});
+        }
       });
     }
+    console.log(this.id);
+    console.log(this.projectForm.get('skills').value);
   }
 
   submitForm() {
     this.projectForm.markAllAsTouched();
     if (this.projectForm.valid) {
-      this.projectService
-        .createProject(this.projectForm.value)
-        .subscribe((resp) => console.log(resp));
+      if(this.id === 'new') {
+        this.projectService
+          .createProjectHTTP(this.projectForm.value)
+          .subscribe((resp) => console.log(resp));
+      } else {
+        this.projectService
+          .changeProjectHTTP(this.projectForm.value, this.id)
+          .subscribe((resp) => console.log(resp));
+      }
     }
   }
 

@@ -13,21 +13,53 @@ import { ProjectToGet } from '../interfaces/project-to-get';
 })
 export class ProjectService {
   private projectsList: ProjectsToGetData[];
-  public projectsSubject: Subject<ProjectsToGetData[]> = new Subject<ProjectsToGetData[]>();
+  public projectsSubject: Subject<ProjectsToGetData[]> = new Subject<
+    ProjectsToGetData[]
+  >();
 
   constructor(private httpClient: HttpClient) {}
 
   public getAllProjectsHTTP(): Observable<ProjectsToGet> {
     return this.httpClient.get<ProjectsToGet>(
-      `${environment.apiUrl}/projects`
+      `${environment.apiUrl}/projects?populate=skills`
     );
   }
-
 
   public getProjectHTTP(projectID: number): Observable<ProjectToGet> {
     return this.httpClient.get<ProjectToGet>(
       `${environment.apiUrl}/projects/${projectID}`
     );
+  }
+
+  public createProjectHTTP(data: ProjectToPost): Observable<ProjectsToGetData> {
+    return this.httpClient
+      .post<ProjectsToGetData>(`${environment.apiUrl}/projects`, {
+        data,
+      })
+      .pipe(
+        map((data) => {
+          this.addProject(data);
+          this.updateValue();
+          return data;
+        })
+      );
+  }
+
+  //Подумать по поводу takeUntill()
+  public changeProjectHTTP(
+    data: ProjectToPost,
+    projectID: number
+  ): Observable<ProjectToGet> {
+    return this.httpClient
+      .put<ProjectToGet>(`${environment.apiUrl}/projects/${projectID}?populate=skills`, {
+        data,
+      })
+      .pipe(
+        map((response) => {
+          this.changeProject(response);
+          return response;
+        })
+      );
   }
 
   public getAllProjects(): ProjectsToGetData[] {
@@ -36,30 +68,6 @@ export class ProjectService {
 
   public getProject(projectID: number): ProjectsToGetData {
     return this.projectsList.find((element) => element.id === projectID);
-  }
-
-  public createProject(data: ProjectToPost): Observable<ProjectsToGetData> {
-    return this.httpClient
-      .post<ProjectsToGetData>(`${environment.apiUrl}/projects`, {
-        data
-      })
-  }
- 
-//Подумать по поводу takeUntill()
-  public changeProjectHTTP(
-    projectData: ProjectToPost,
-    projectID: number
-  ): Observable<ProjectToGet> {
-    return this.httpClient
-      .post<ProjectToGet>(`${environment.apiUrl}/projects/${projectID}`, {
-        projectData,
-      })
-      .pipe(
-        map((response) => {
-          this.changeProject(response);
-          return response;
-        })
-      );
   }
 
   public deleteProjectHTTP(projectID: number): Observable<ProjectToGet> {
@@ -72,7 +80,7 @@ export class ProjectService {
         })
       );
   }
-  
+
   public setProjects(projectsList: ProjectsToGet) {
     this.projectsList = projectsList.data;
     this.updateValue();
@@ -90,18 +98,14 @@ export class ProjectService {
     this.projectsList.splice(index, 1);
     this.updateValue();
   }
-  
 
   private changeProject(projectData: ProjectToGet) {
     const index = this.projectsList.indexOf(
-      this.projectsList.find(
-        (element) => element.id === projectData.data.id
-      )
+      this.projectsList.find((element) => element.id === projectData.data.id)
     );
     this.projectsList.splice(index, 1, projectData.data);
     this.updateValue();
   }
-
 
   private updateValue(): void {
     this.projectsSubject.next(this.projectsList);
@@ -109,15 +113,15 @@ export class ProjectService {
 
   public getTablesData(): DataItem[] {
     const DataItemList: DataItem[] = [];
-    for(let index = 0; index < this.projectsList.length; index++) {
+    for (let index = 0; index < this.projectsList.length; index++) {
       console.log(1);
       DataItemList.push({
         id: String(this.projectsList[index].id),
         name: this.projectsList[index].attributes.name,
         domain: this.projectsList[index].attributes.domain,
         from: this.projectsList[index].attributes.from,
-        to: this.projectsList[index].attributes.to
-      })
+        to: this.projectsList[index].attributes.to,
+      });
     }
     return DataItemList;
   }
