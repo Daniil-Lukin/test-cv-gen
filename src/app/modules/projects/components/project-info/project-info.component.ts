@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   Input,
   OnInit,
@@ -8,7 +9,9 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EntityData } from 'src/app/modules/entities/interfaces/entity-data';
 import { EntitiesService } from 'src/app/modules/entities/services/entities.service';
+import { ProjectToGet } from '../../interfaces/project-to-get';
 import { ProjectToPost } from '../../interfaces/project-to-post';
+import { ProjectsToGetData } from '../../interfaces/projects-to-get-data';
 import { ProjectService } from '../../services/project.service';
 
 @Component({
@@ -26,36 +29,29 @@ export class ProjectInfoComponent implements OnInit {
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private entitiesService: EntitiesService,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private changeDetectorRef: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
     this.entitiesService.getEntity('skills').subscribe((value) => {
       this.listOfOptions = value;
-      console.log(value);
     });
     this.projectForm = this.formBuilder.group({
-      name: [null, Validators.compose([Validators.required])],
-      description: [null, Validators.compose([Validators.required])],
-      domain: [null, Validators.compose([Validators.required])],
-      from: [null, Validators.compose([Validators.required])],
-      to: [null, Validators.compose([Validators.required])],
-      skills: [null, Validators.compose([Validators.required])],
-      internalName: [null, Validators.compose([Validators.required])],
-    });
+      name: [null, Validators.required],
+      description: [null, Validators.required],
+      domain: [null, Validators.required],
+      from: [null, Validators.required],
+      to: [null, Validators.required],
+      skills: [null, Validators.required],
+      internalName: [null, Validators.required],
+    }); // Поменять форич
     if (this.id != 'new') {
-      const projectData = this.projectService.getProject(Number(this.id));
-      Object.keys(projectData.attributes).forEach((key) => {
-        if(key !='skills') {
-          this.projectForm.patchValue({[key]: projectData.attributes[key]});
-        } else {
-          const arrayOfSkillsId = projectData.attributes.skills.data.map((attr)=> attr.id);
-          this.projectForm.patchValue({[key]: arrayOfSkillsId});
-        }
+      this.projectService.getProjectHTTP(Number(this.id)).subscribe((value) => {
+        this.changeDetectorRef.markForCheck();
+        this.patchAllValues(value.data);
       });
     }
-    console.log(this.id);
-    console.log(this.projectForm.get('skills').value);
   }
 
   submitForm() {
@@ -73,31 +69,14 @@ export class ProjectInfoComponent implements OnInit {
     }
   }
 
-  get name() {
-    return this.projectForm.get('name').value;
-  }
-
-  get description() {
-    return this.projectForm.get('description').value;
-  }
-
-  get domain() {
-    return this.projectForm.get('domain').value;
-  }
-
-  get from() {
-    return this.projectForm.get('from').value;
-  }
-
-  get to() {
-    return this.projectForm.get('to').value;
-  }
-
-  get internalName() {
-    return this.projectForm.get('internalName').value;
-  }
-
-  get selectedSkills() {
-    return this.projectForm.get('skills').value;
+  private patchAllValues(projectData: ProjectsToGetData) {
+    Object.keys(projectData.attributes).forEach((key) => {
+      if(key !='skills') {
+        this.projectForm.patchValue({[key]: projectData.attributes[key]});
+      } else {
+        const arrayOfSkillsId = projectData.attributes.skills.data.map((attr)=> attr.id);
+        this.projectForm.patchValue({[key]: arrayOfSkillsId});
+      }
+    });
   }
 }

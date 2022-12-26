@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DateHelperService } from 'ng-zorro-antd/i18n';
 import { NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
@@ -15,13 +15,16 @@ import { ProjectService } from '../../services/project.service';
 })
 export class ProjectsDisplayComponent implements OnInit {
   public listOfColumns: ColumnItem[] = [];
-  public listOfData: DataItem[] = [];
+  public listOfData: DataItem[];
   private listOfColumnsNames: string[] = ['Name', 'Domain', 'From', 'To'];
 
-  constructor(private projectService: ProjectService, private router: Router) {}
+  constructor(private projectService: ProjectService, private router: Router, private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.listOfData = this.projectService.getTablesData();
+    this.projectService.getTablesData().subscribe((value) => {
+      this.listOfData = value;
+      this.changeDetectorRef.markForCheck();
+    });
     this.fillTableColumns();
   }
 

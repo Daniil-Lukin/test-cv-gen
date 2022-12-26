@@ -12,15 +12,11 @@ import { ProjectService } from 'src/app/modules/projects/services/project.servic
 export class CvPageComponent implements OnInit {
   constructor(
     private entitiesService: EntitiesService,
-    private projectsService: ProjectService
   ) {}
 
   ngOnInit(): void {
     this.entitiesService.getEntitiesData().subscribe((value) => {
       this.entitiesService.setEntitiesData(value);
     });
-    this.projectsService
-      .getAllProjectsHTTP()
-      .subscribe((response) => this.projectsService.setProjects(response));
   }
 }

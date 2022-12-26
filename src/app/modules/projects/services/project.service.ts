@@ -12,10 +12,6 @@ import { ProjectToGet } from '../interfaces/project-to-get';
   providedIn: 'root',
 })
 export class ProjectService {
-  private projectsList: ProjectsToGetData[];
-  public projectsSubject: Subject<ProjectsToGetData[]> = new Subject<
-    ProjectsToGetData[]
-  >();
 
   constructor(private httpClient: HttpClient) {}
 
@@ -27,7 +23,7 @@ export class ProjectService {
 
   public getProjectHTTP(projectID: number): Observable<ProjectToGet> {
     return this.httpClient.get<ProjectToGet>(
-      `${environment.apiUrl}/projects/${projectID}`
+      `${environment.apiUrl}/projects/${projectID}?populate=skills`
     );
   }
 
@@ -35,17 +31,10 @@ export class ProjectService {
     return this.httpClient
       .post<ProjectsToGetData>(`${environment.apiUrl}/projects`, {
         data,
-      })
-      .pipe(
-        map((data) => {
-          this.addProject(data);
-          this.updateValue();
-          return data;
-        })
-      );
+      });
   }
 
-  //Подумать по поводу takeUntill()
+  //переделать под запросы
   public changeProjectHTTP(
     data: ProjectToPost,
     projectID: number
@@ -53,76 +42,37 @@ export class ProjectService {
     return this.httpClient
       .put<ProjectToGet>(`${environment.apiUrl}/projects/${projectID}?populate=skills`, {
         data,
-      })
-      .pipe(
-        map((response) => {
-          this.changeProject(response);
-          return response;
-        })
-      );
-  }
-
-  public getAllProjects(): ProjectsToGetData[] {
-    return this.projectsList;
-  }
-
-  public getProject(projectID: number): ProjectsToGetData {
-    return this.projectsList.find((element) => element.id === projectID);
+      });
   }
 
   public deleteProjectHTTP(projectID: number): Observable<ProjectToGet> {
     return this.httpClient
-      .delete<ProjectToGet>(`${environment.apiUrl}/projects/${projectID}`)
-      .pipe(
-        map((response) => {
-          this.deleteValue(response.data.id);
-          return response;
+      .delete<ProjectToGet>(`${environment.apiUrl}/projects/${projectID}`);
+  }
+  //const { skills, ...other } = projectData. attributes
+
+  public getTablesData(): Observable<DataItem[]> {
+    // return this.projectsList.map((element) => {
+    //   return {
+        // id: String(element.id),
+        // name: element.attributes.name,
+        // domain: element.attributes.domain,
+        // from: element.attributes.from,
+        // to: element.attributes.to,
+    //   }
+    // })
+    return this.getAllProjectsHTTP().pipe<DataItem[]>((
+      map( (value) => {
+        return value.data.map((element) => {
+          return {
+            id: String(element.id),
+            name: element.attributes.name,
+            domain: element.attributes.domain,
+            from: element.attributes.from,
+            to: element.attributes.to,
+          }
         })
-      );
-  }
-
-  public setProjects(projectsList: ProjectsToGet) {
-    this.projectsList = projectsList.data;
-    this.updateValue();
-  }
-
-  private addProject(projectData: ProjectsToGetData): void {
-    this.projectsList.push(projectData);
-    this.updateValue();
-  }
-
-  private deleteValue(projectID: number): void {
-    const index = this.projectsList.indexOf(
-      this.projectsList.find((element) => element.id === projectID)
-    );
-    this.projectsList.splice(index, 1);
-    this.updateValue();
-  }
-
-  private changeProject(projectData: ProjectToGet) {
-    const index = this.projectsList.indexOf(
-      this.projectsList.find((element) => element.id === projectData.data.id)
-    );
-    this.projectsList.splice(index, 1, projectData.data);
-    this.updateValue();
-  }
-
-  private updateValue(): void {
-    this.projectsSubject.next(this.projectsList);
-  }
-
-  public getTablesData(): DataItem[] {
-    const DataItemList: DataItem[] = [];
-    for (let index = 0; index < this.projectsList.length; index++) {
-      console.log(1);
-      DataItemList.push({
-        id: String(this.projectsList[index].id),
-        name: this.projectsList[index].attributes.name,
-        domain: this.projectsList[index].attributes.domain,
-        from: this.projectsList[index].attributes.from,
-        to: this.projectsList[index].attributes.to,
-      });
-    }
-    return DataItemList;
+      } )
+    ))
   }
 }
