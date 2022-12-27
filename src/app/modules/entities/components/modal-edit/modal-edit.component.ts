@@ -5,7 +5,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { NzModalRef } from 'ng-zorro-antd/modal';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { EntitiesService } from '../../services/entities.service';
 
 @Component({
@@ -24,18 +24,18 @@ export class ModalEditComponent {
   ) {}
 
   public submitClick(): void {
+    let observable: Observable<unknown>;
     if (this.id) {
-      this.entitiesService.changeEntity(this.newName, this.id).subscribe();
+      observable = this.entitiesService.changeEntity(this.newName, this.id);
     } else {
-      this.entitiesService.createEntity(this.newName).subscribe();
+      observable = this.entitiesService.createEntity(this.newName);
     }
-    this.destroyModal(true);
+    observable.subscribe(() => this.destroyModal(true)); //Захендлить ошибку, и если успешно то дестрой
   }
 
   public deleteClick(): void {
     this.entitiesService
-      .deleteEntity(this.id)
-    this.destroyModal(true);
+      .deleteEntity(this.id).subscribe(() => this.destroyModal(true))
   }
 
   public destroyModal(isChanged = false): void {

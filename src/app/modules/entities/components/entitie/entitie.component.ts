@@ -4,8 +4,9 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { EMPTY, map, Subject, switchMap } from 'rxjs';
+import { EMPTY, filter, map, Subject, switchMap } from 'rxjs';
 import { EntityData } from '../../interfaces/entity-data';
 import { EntitiesService } from '../../services/entities.service';
 import { ModalEditComponent } from '../modal-edit/modal-edit.component';
@@ -19,17 +20,23 @@ import { ModalEditComponent } from '../modal-edit/modal-edit.component';
 export class EntitieComponent implements OnInit {
   public entitiesArray: EntityData[] = []; //Заполнять массив опр сущности в зависимости от того, в какой вкладке я нахожусь
   public isLoading: boolean = false;
+  private entityType = this.activatedRoute.snapshot.params['entity'];
 
   constructor(
     private entitiesService: EntitiesService,
-    private modalService: NzModalService
+    private modalService: NzModalService,
+    private changeDetectionRef: ChangeDetectorRef,
+    private activatedRoute: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
-    this.entitiesService.setEntityType();
+    // this.entitiesService.setEntityType();
     this.entitiesService
-      .getEntity()
-      .subscribe((value) => (this.entitiesArray = value));
+      .getEntity(this.entityType)
+      .subscribe((value) => {
+        this.entitiesArray = value;
+        this.changeDetectionRef.markForCheck();
+      });
   }
 
   onEntityClick(id: number, name: string) {
@@ -40,12 +47,11 @@ export class EntitieComponent implements OnInit {
         id: id,
       },
     });
-    modal.afterClose.subscribe((isChanged) => {
-      if (isChanged) {
-        this.entitiesService
-          .getEntityArray()
-          .subscribe();
-      }
+    modal.afterClose.pipe(
+      filter(Boolean),
+      switchMap(() => this.entitiesService.getEntityArrayHTTP())
+    ).subscribe((data) => {
+      this.entitiesService.updateStoragedData(data);
     });
   }
 
@@ -58,7 +64,7 @@ export class EntitieComponent implements OnInit {
       map((isChanged) => {
         if(isChanged) {
           console.log(this.entitiesArray);
-          this.entitiesService.getEntityArray().subscribe();
+          this.entitiesService.getEntityArrayHTTP().subscribe();
           console.log(this.entitiesArray);
         }
       })

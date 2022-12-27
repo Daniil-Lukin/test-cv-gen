@@ -3,7 +3,7 @@ import { ResponsePagination } from "./response-pagination";
 
 export interface SkillsResponse {
   data: EntityData[];
-  meta: {
+  meta?: {
     pagination: ResponsePagination;
   }
 }

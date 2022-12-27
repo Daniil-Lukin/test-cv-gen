@@ -1,39 +1,29 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   BehaviorSubject,
-  catchError,
   forkJoin,
   map,
   Observable,
-  raceWith,
-  switchMap,
-  throwError,
 } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { EntitiesStorage } from '../interfaces/entities-storage';
 import { EntityData } from '../interfaces/entity-data';
 import { ForkJoinResponse } from '../interfaces/fork-join-response';
 import { SkillsResponse } from '../interfaces/skills-response';
+import { Entities } from '../enums/entities.enum';
 
-enum entities {
-  skills,
-  responsibilities,
-  languages,
-}
 
 @Injectable({
   providedIn: 'root',
 })
 export class EntitiesService {
-  private _entityType: string; //skills responsibillities languages
+  private _entityType: string;
   private entitiesStorage = {
     skills: new BehaviorSubject([]),
     responsibilities: new BehaviorSubject([]),
     languages: new BehaviorSubject([]),
-  }
-  private entitiesTypes = ['skills', 'responsibilities', 'languages'];
+  };
 
   constructor(private httpClient: HttpClient, private router: Router) {}
 
@@ -42,16 +32,16 @@ export class EntitiesService {
     console.log(this._entityType);
   }
 
-  public getEntityArray(
+  public getEntityArrayHTTP(
     entityType = this._entityType
   ): Observable<EntityData[]> {
+    const params = new HttpParams({fromObject: {'pagination[withCount]': false}});
     return this.httpClient
       .get<SkillsResponse>(
-        `${environment.apiUrl}/${entityType}?pagination%5BwithCount%5D=false`
+        `${environment.apiUrl}/${entityType}`, { params }
       )
       .pipe(
         map((response) => {
-          this.updateStoragedData(response.data, entityType);
           return response.data;
           })
         );
@@ -82,29 +72,28 @@ export class EntitiesService {
   }
 
   public getEntitiesData(): Observable<ForkJoinResponse> {
-    return forkJoin({
-      skills: this.getEntityArray('skills'),
-      languages: this.getEntityArray('languages'),
-      responsibilities: this.getEntityArray('responsibilities'),
-    })
+    return forkJoin(
+      Object.values(Entities).reduce((acc, key) => ({
+        ...acc,
+        [key]: this.getEntityArrayHTTP(key)
+      }), {})
+    )
   }
 
   public setEntitiesData(response: ForkJoinResponse): void {
-    for(let type of this.entitiesTypes) {
-      console.log(this.entitiesTypes);
-      this.entitiesStorage[type].next(response[type]);
-      console.log(this.entitiesStorage);
-    }
+    Object.entries(response).forEach(([key,value]) => {
+      this.entitiesStorage[key].next(value);
+    });
   }
 
-  private updateStoragedData(
+  public updateStoragedData(
     entityData: EntityData[],
     entityType = this.entityType
   ): void {
     this.entitiesStorage[entityType].next(entityData);
   }
 
-  public getEntity(entityType = this.entityType): BehaviorSubject<any>{
+  public getEntity(entityType = 'skills'): BehaviorSubject<EntityData[]>{
     return this.entitiesStorage[entityType];
   }
 }
