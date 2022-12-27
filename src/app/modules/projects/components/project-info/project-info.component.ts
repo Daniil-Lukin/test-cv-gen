@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { EntityData } from 'src/app/modules/entities/interfaces/entity-data';
 import { EntitiesService } from 'src/app/modules/entities/services/entities.service';
 import { ProjectToGet } from '../../interfaces/project-to-get';
@@ -30,11 +31,10 @@ export class ProjectInfoComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private entitiesService: EntitiesService,
     private projectService: ProjectService,
-    private changeDetectorRef: ChangeDetectorRef,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-
     this.entitiesService.getEntity('skills').subscribe((value) => {
       this.listOfOptions = value;
     });
@@ -60,22 +60,25 @@ export class ProjectInfoComponent implements OnInit {
   submitForm() {
     this.projectForm.markAllAsTouched();
     if (this.projectForm.valid) {
-      if(this.id === 'new') {
-        this.projectService
-          .createProjectHTTP(this.projectForm.value)
-          .subscribe((resp) => console.log(resp));
+      let observable: Observable<unknown>;
+      if (this.id === 'new') {
+        observable = this.projectService.createProjectHTTP(
+          this.projectForm.value
+        );
       } else {
-        this.projectService
-          .changeProjectHTTP(this.projectForm.value, this.id)
-          .subscribe((resp) => console.log(resp));
+        observable = this.projectService.changeProjectHTTP(
+          this.projectForm.value,
+          this.id
+        );
       }
+      observable.subscribe();
     }
   }
 
   private patchAllValues(projectData: ProjectsToGetData): void {
-    const {skills, ...other} = projectData.attributes;
+    const { skills, ...other } = projectData.attributes;
     this.projectForm.patchValue(other);
     const skillsId = skills.data.map((skill) => skill.id);
-    this.projectForm.patchValue({skills: skillsId});
+    this.projectForm.patchValue({ skills: skillsId });
   }
 }
