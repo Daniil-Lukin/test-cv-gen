@@ -3,16 +3,11 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   BehaviorSubject,
-  catchError,
   forkJoin,
   map,
   Observable,
-  raceWith,
-  switchMap,
-  throwError,
 } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { EntitiesStorage } from '../interfaces/entities-storage';
 import { EntityData } from '../interfaces/entity-data';
 import { ForkJoinResponse } from '../interfaces/fork-join-response';
 import { SkillsResponse } from '../interfaces/skills-response';
@@ -23,7 +18,7 @@ import { Entities } from '../enums/entities.enum';
   providedIn: 'root',
 })
 export class EntitiesService {
-  private _entityType: string; //skills responsibillities languages
+  private _entityType: string;
   private entitiesStorage = {
     skills: new BehaviorSubject([]),
     responsibilities: new BehaviorSubject([]),
@@ -89,7 +84,6 @@ export class EntitiesService {
     Object.entries(response).forEach(([key,value]) => {
       this.entitiesStorage[key].next(value);
     });
-    //[[key,value],[]]
   }
 
   public updateStoragedData(

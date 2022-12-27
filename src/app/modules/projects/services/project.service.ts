@@ -1,8 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, Subject, switchMap, take } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { DataItem } from '../interfaces/data-item';
 import { ProjectsToGet } from '../interfaces/projects-to-get';
 import { ProjectToPost } from '../interfaces/project-to-post';
 import { ProjectsToGetData } from '../interfaces/projects-to-get-data';
@@ -12,18 +11,22 @@ import { ProjectToGet } from '../interfaces/project-to-get';
   providedIn: 'root',
 })
 export class ProjectService {
+  
+  private params = new HttpParams({fromObject: {'populate': 'skills'}});
 
   constructor(private httpClient: HttpClient) {}
 
   public getAllProjectsHTTP(): Observable<ProjectsToGet> {
+    const params = this.params;
     return this.httpClient.get<ProjectsToGet>(
-      `${environment.apiUrl}/projects?populate=skills`
+      `${environment.apiUrl}/projects`, {params}
     );
   }
 
   public getProjectHTTP(projectID: number): Observable<ProjectToGet> {
+    const params = this.params;
     return this.httpClient.get<ProjectToGet>(
-      `${environment.apiUrl}/projects/${projectID}?populate=skills`
+      `${environment.apiUrl}/projects/${projectID}`, {params}
     );
   }
 
@@ -34,13 +37,12 @@ export class ProjectService {
       });
   }
 
-  //переделать под запросы
   public changeProjectHTTP(
     data: ProjectToPost,
     projectID: number
   ): Observable<ProjectToGet> {
     return this.httpClient
-      .put<ProjectToGet>(`${environment.apiUrl}/projects/${projectID}?populate=skills`, {
+      .put<ProjectToGet>(`${environment.apiUrl}/projects/${projectID}`, {
         data,
       });
   }
@@ -49,30 +51,5 @@ export class ProjectService {
     return this.httpClient
       .delete<ProjectToGet>(`${environment.apiUrl}/projects/${projectID}`);
   }
-  //const { skills, ...other } = projectData. attributes
 
-  public getTablesData(): Observable<DataItem[]> {
-    // return this.projectsList.map((element) => {
-    //   return {
-        // id: String(element.id),
-        // name: element.attributes.name,
-        // domain: element.attributes.domain,
-        // from: element.attributes.from,
-        // to: element.attributes.to,
-    //   }
-    // })
-    return this.getAllProjectsHTTP().pipe<DataItem[]>((
-      map( (value) => {
-        return value.data.map((element) => {
-          return {
-            id: String(element.id),
-            name: element.attributes.name,
-            domain: element.attributes.domain,
-            from: element.attributes.from,
-            to: element.attributes.to,
-          }
-        })
-      } )
-    ))
-  }
 }

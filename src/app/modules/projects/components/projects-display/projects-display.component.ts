@@ -1,7 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { DateHelperService } from 'ng-zorro-antd/i18n';
 import { NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
+import { map } from 'rxjs';
 import { ColumnItem } from '../../interfaces/column-item';
 import { DataItem } from '../../interfaces/data-item';
 import { ProjectsToGet } from '../../interfaces/projects-to-get';
@@ -18,13 +24,32 @@ export class ProjectsDisplayComponent implements OnInit {
   public listOfData: DataItem[];
   private listOfColumnsNames: string[] = ['Name', 'Domain', 'From', 'To'];
 
-  constructor(private projectService: ProjectService, private router: Router, private changeDetectorRef: ChangeDetectorRef) {}
+  constructor(
+    private projectService: ProjectService,
+    private router: Router,
+    private changeDetectorRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    this.projectService.getTablesData().subscribe((value) => {
-      this.listOfData = value;
-      this.changeDetectorRef.markForCheck();
-    });
+    this.projectService
+      .getAllProjectsHTTP()
+      .pipe(
+        map((response) => {
+          return response.data.map((element) => {
+            return {
+              id: String(element.id),
+              name: element.attributes.name,
+              domain: element.attributes.domain,
+              from: element.attributes.from,
+              to: element.attributes.to,
+            };
+          });
+        })
+      )
+      .subscribe((response) => {
+        this.listOfData = response;
+        this.changeDetectorRef.markForCheck();
+      });
     this.fillTableColumns();
   }
 
