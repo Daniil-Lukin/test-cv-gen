@@ -2,8 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { PositionToGet } from '../interfaces/position-to-get';
+import { PositionsToGet } from '../interfaces/positions-to-get';
+import { PositionToGetData } from '../interfaces/positions-to-get-interfaces/position-to-get-data';
 import { PositionToPost } from '../interfaces/position-to-post';
+import { PositionToGet } from '../interfaces/position-to-get';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +14,8 @@ export class EmployeesService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getAllEmployeesHTTP(): Observable<PositionToGet>{
-    return this.httpClient.get<PositionToGet>(`${environment.apiUrl}/positions`);
+  public getAllEmployeesHTTP(): Observable<PositionsToGet>{
+    return this.httpClient.get<PositionsToGet>(`${environment.apiUrl}/positions`);
   }
 
   public getEmployeeHTTP(id: number | string): Observable<PositionToGet> {
