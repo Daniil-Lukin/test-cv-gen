@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { map } from 'rxjs';
-import { EmployeeTable } from '../../interfaces/employee-table';
+import { EmployeeTable } from '../../interfaces/employee-interfaces/employee-table';
 import { PositionsToGet } from '../../interfaces/positions-to-get';
-import { PositionToGetData } from '../../interfaces/positions-to-get-interfaces/position-to-get-data';
+import { PositionToGetData } from '../../interfaces/position-interfaces/positions-to-get-interfaces/position-to-get-data';
 import { EmployeesService } from '../../services/employees.service';
 
 @Component({
