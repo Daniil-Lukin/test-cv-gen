@@ -1,5 +1,3 @@
 import { EmployeeToGet } from "./employee-to-get";
 
-export interface EmployeesToGet {
-  data: EmployeeToGet[];
-}
+export interface EmployeesToGet extends Array<EmployeeToGet>{};

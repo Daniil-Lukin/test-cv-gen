@@ -1,4 +1,5 @@
 export interface EmployeeToGet {
+  id: number;
   username: string;
   email: string;
   skills: string[] | number[];

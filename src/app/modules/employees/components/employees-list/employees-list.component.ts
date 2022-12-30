@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { map } from 'rxjs';
 import { EmployeeTable } from '../../interfaces/employee-interfaces/employee-table';
-import { PositionsToGet } from '../../interfaces/positions-to-get';
-import { PositionToGetData } from '../../interfaces/position-interfaces/positions-to-get-interfaces/position-to-get-data';
 import { EmployeesService } from '../../services/employees.service';
 
 @Component({
@@ -20,17 +18,27 @@ export class EmployeesListComponent implements OnInit {
     this.employeesService
       .getAllEmployeesHTTP().pipe(
         map((response) => {
-          return response.data.map((employee) => {
+          return response.map((employee) => {
+            if(employee.firstName === null) {
+              employee.firstName = 'Vasya';
+            }
+            if(employee.lastName === null) {
+              employee.lastName = 'Pupkin';
+            }
             return {
               id: String(employee.id),
-              name: employee.attributes.name,
+              firstName: employee.firstName,
+              lastName: employee.lastName,
+              email: employee.email,
             }
           })
         })
       )
       .subscribe((employee) => {
-        this.listOfData = employee;
         this.changeDetectorRef.markForCheck();
+        this.listOfData = employee;
+        console.log(employee);
+        console.log(this.listOfData);
       });
 
   }

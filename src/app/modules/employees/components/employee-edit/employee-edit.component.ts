@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { map, Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { EmployeesService } from '../../services/employees.service';
 
 @Component({
@@ -18,17 +18,18 @@ export class EmployeeEditComponent implements OnInit {
     private formBuilder: FormBuilder,
     private employeesService: EmployeesService,
     private activatedRoute: ActivatedRoute,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
     this.employeeForm = this.formBuilder.group({
-      name: [null, Validators.required],
+      firstName: [null, Validators.required],
+      lastName: [null, Validators.required],
+      email: [null, Validators.compose([Validators.required,Validators.email])],
     });
     if ((this.id != 'new')) {
-      this.employeesService.getEmployeeHTTP(this.id).pipe(
-        map((employee) => employee.data.attributes)
-      ).subscribe((value) => {
+      this.employeesService.getEmployeeHTTP(this.id).subscribe((value) => {
         this.changeDetectorRef.markForCheck();
         this.employeeForm.patchValue(value);
       });
@@ -51,5 +52,9 @@ export class EmployeeEditComponent implements OnInit {
       }
       observable.subscribe();
     }
+  }
+
+  public onCancelClick() {
+    this.router.navigate(['home/employees']);
   }
 }

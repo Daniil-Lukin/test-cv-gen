@@ -1,14 +1,29 @@
 <div class="form-wrapper">
   <form nz-form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
     <nz-form-item>
+      <!-- Name -->
       <nz-form-label>Name</nz-form-label>
       <nz-form-control nzErrorTip="Fill the name">
-        <input nz-input formControlName="name" type="text">
+        <input nz-input formControlName="firstName" type="text">
+      </nz-form-control>
+    </nz-form-item>
+    <!-- last name -->
+    <nz-form-item>
+      <nz-form-label>Last name</nz-form-label>
+      <nz-form-control nzErrorTip="Fill the last name">
+        <input nz-input formControlName="lastName" type="text">
+      </nz-form-control>
+    </nz-form-item>
+    <!-- email -->
+    <nz-form-item>
+      <nz-form-label>Email</nz-form-label>
+      <nz-form-control nzErrorTip="Fill the email">
+        <input nz-input formControlName="email" type="text">
       </nz-form-control>
     </nz-form-item>
   </form>
 </div>
 <div class="button-wrapper">
   <button nz-button nzType="primary" (click)="onSubmit()">Save</button>
-  <button nz-button>Cancel</button>
+  <button nz-button (click)="onCancelClick()">Cancel</button>
 </div>
