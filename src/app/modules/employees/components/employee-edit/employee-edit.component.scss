@@ -5,3 +5,8 @@ button {
 input {
   max-width: 12.5rem;
 }
+
+.button-wrapper {
+  display: flex;
+  flex-direction: row-reverse;
+}
