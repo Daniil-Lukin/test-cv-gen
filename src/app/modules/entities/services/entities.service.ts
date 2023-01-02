@@ -12,6 +12,7 @@ import { EntityData } from '../interfaces/entity-data';
 import { ForkJoinResponse } from '../interfaces/fork-join-response';
 import { SkillsResponse } from '../interfaces/skills-response';
 import { Entities } from '../enums/entities.enum';
+import { EntityToGet } from '../interfaces/entity-to-get';
 
 
 @Injectable({
@@ -32,8 +33,13 @@ export class EntitiesService {
     console.log(this._entityType);
   }
 
+  public getEntityHTTP(id: number, entityType = 'skills'): Observable<EntityToGet> {
+    const params = new HttpParams({fromObject: {'pagination[withCount]': false}});
+    return this.httpClient.get<EntityToGet>(`${environment.apiUrl}/${entityType}/${id}`, { params });
+  }
+
   public getEntityArrayHTTP(
-    entityType = this._entityType
+    entityType = 'skills'
   ): Observable<EntityData[]> {
     const params = new HttpParams({fromObject: {'pagination[withCount]': false}});
     return this.httpClient
@@ -47,9 +53,9 @@ export class EntitiesService {
         );
   }
 
-  public createEntity(name: string): Observable<SkillsResponse> {
+  public createEntity(name: string, entityType = 'skills' ): Observable<SkillsResponse> {
     return this.httpClient.post<SkillsResponse>(
-      `${environment.apiUrl}/${this._entityType}`,
+      `${environment.apiUrl}/${entityType}`,
       { data: { name } }
     );
   }

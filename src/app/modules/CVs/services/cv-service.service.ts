@@ -2,15 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { CvAttributes } from '../inetfaces/cv-attributes';
-import { CvToGet } from '../inetfaces/cv-to-get';
-import { CvToPost } from '../inetfaces/cv-to-post';
-import { CvsToGet } from '../inetfaces/cvs-to-get';
+import { CvAttributes } from '../interfaces/cv-interfaces/cv-attributes';
+import { CvToGet } from '../interfaces/cv-interfaces/cv-to-get';
+import { CvsToGet } from '../interfaces/cv-interfaces/cvs-to-get';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class CvServiceService {
+export class CvService {
 
   constructor(private httpClient: HttpClient) { }
 

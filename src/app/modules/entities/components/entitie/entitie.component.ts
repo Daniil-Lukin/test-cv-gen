@@ -63,6 +63,7 @@ export class EntitieComponent implements OnInit {
     modal.afterClose.pipe(
       map((isChanged) => {
         if(isChanged) {
+          console.log(isChanged);
           console.log(this.entitiesArray);
           this.entitiesService.getEntityArrayHTTP().subscribe();
           console.log(this.entitiesArray);

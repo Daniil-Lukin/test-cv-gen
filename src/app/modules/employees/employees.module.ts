@@ -10,14 +10,18 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { CvsModule } from '../CVs/cvs.module';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 
 
 
 @NgModule({
   declarations: [EmployeesListComponent, EmployeeDisplayComponent, EmployeeEditComponent],
+  providers: [NzModalService],
   imports: [
     CommonModule,
     EmpolyeesRoutingModule,
+    CvsModule,
     ReactiveFormsModule,
     NzTableModule,
     NzTabsModule,

@@ -1,0 +1,27 @@
+:host {
+  display: flex;
+}
+
+.cv-selection-wrapper {
+  width: 13.563rem;
+  display: flex;
+  flex-direction: column;
+  margin-right: 1rem;
+}
+
+form {
+  display: flex;
+  justify-content: space-around;
+  padding: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.button-wrapper {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-bottom: 0.6rem;
+}
+
+.ant-select {
+  width: 12.5rem;
+ }

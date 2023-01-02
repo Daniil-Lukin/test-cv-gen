@@ -24,7 +24,7 @@ import { ProjectService } from '../../services/project.service';
 export class ProjectInfoComponent implements OnInit {
   public projectForm: FormGroup;
   public listOfOptions: EntityData[] = [];
-  private id = this.activatedRoute.snapshot.params['id'];
+  @Input() id = this.activatedRoute.snapshot.params['id'];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -80,5 +80,8 @@ export class ProjectInfoComponent implements OnInit {
     this.projectForm.patchValue(other);
     const skillsId = skills.data.map((skill) => skill.id);
     this.projectForm.patchValue({ skills: skillsId });
+  }
+  public setId(newId) {
+    this.id = newId;
   }
 }

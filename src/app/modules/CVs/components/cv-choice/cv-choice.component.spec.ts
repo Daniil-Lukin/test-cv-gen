@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CvEditComponent } from './cv-edit.component';
+import { CvChoiceComponent } from './cv-choice.component';
 
-describe('CvEditComponent', () => {
-  let component: CvEditComponent;
-  let fixture: ComponentFixture<CvEditComponent>;
+describe('CvChoiceComponent', () => {
+  let component: CvChoiceComponent;
+  let fixture: ComponentFixture<CvChoiceComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CvEditComponent ]
+      declarations: [ CvChoiceComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CvEditComponent);
+    fixture = TestBed.createComponent(CvChoiceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
