@@ -18,20 +18,20 @@
   </nz-list>
   <button nz-button (click)="createCv()">+</button>
 </div>
-<div class="cv-edit-wrapper" [ngStyle]="{'visibility': (visibility) ? 'visible' : 'hidden'}">
+<div class="cv-edit-wrapper" [hidden]="hidden">
   <form nz-form nzLayout="inline" [formGroup]="cvForm" (ngSubmit)="onSave()">
     <!-- email -->
     <nz-form-item>
       <nz-form-label>Description</nz-form-label>
       <nz-form-control nzErrorTip="Fill the description">
-        <input nz-input formControlName="description" type="text">
+        <input nz-input formControlName="description" type="text" />
       </nz-form-control>
     </nz-form-item>
     <!-- Name -->
     <nz-form-item>
       <nz-form-label>Name</nz-form-label>
       <nz-form-control nzErrorTip="Fill the name">
-        <input nz-input formControlName="name" type="text">
+        <input nz-input formControlName="name" type="text" />
       </nz-form-control>
     </nz-form-item>
     <!-- Skills -->
@@ -55,48 +55,80 @@
       Add project
     </button>
   </div>
-  <!-- <ng-container *ngIf="selectedProjectsList.length != 0"> -->
+  <ng-container *ngIf="selectedProjectsList?.length">
   <nz-collapse>
-    <nz-collapse-panel *ngFor="let project of selectedProjectsList; let index = index">
-      <!-- Name -->
-      <nz-form-item>
-        <nz-form-label>Name</nz-form-label>
-        <input nz-input disabled="true" [ngModel]='project.data.attributes.name'/>
-      </nz-form-item>
-      <!-- From -->
-      <nz-form-item>
-        <nz-form-label>From</nz-form-label>
-        <input nz-input disabled="true" [ngModel]='project.data.attributes.from'/>
-      </nz-form-item>
-      <!-- To -->
-      <nz-form-item>
-        <nz-form-label>To</nz-form-label>
-        <input nz-input disabled="true" [ngModel]='project.data.attributes.to'/>
-      </nz-form-item>
-      <!-- Iternal name -->
-      <nz-form-item>
-        <nz-form-label>Iternal name</nz-form-label>
-        <input nz-input disabled="true" [ngModel]='project.data.attributes.internalName'/>
-      </nz-form-item>
-      <!-- Domain -->
-      <nz-form-item>
-        <nz-form-label>Domain</nz-form-label>
-        <input nz-input disabled="true" [ngModel]='project.data.attributes.domain'/>
-      </nz-form-item>
-      <!-- Tech stack -->
-      <nz-form-item>
-        <nz-form-label>Tech stack</nz-form-label>
-        <input nz-input disabled="true" [ngModel]='projectsSkillsToDisplay[index]'/>
-      </nz-form-item>
-      <!-- Description -->
-      <nz-form-item>
-        <nz-form-label>Description</nz-form-label>
-        <input nz-input disabled="true" [ngModel]='project.data.attributes.description'/>
-      </nz-form-item>
-      <button nz-button (click)="deleteProject(project.data.id)">Delete</button>
-    </nz-collapse-panel>
-  </nz-collapse>
+    <nz-collapse-panel
+    *ngFor="let project of selectedProjectsList; let index = index"
+    >
+        <!-- Name -->
+        <nz-form-item>
+          <nz-form-label>Name</nz-form-label>
+          <input
+            nz-input
+            disabled="true"
+            [ngModel]="project.data.attributes.name"
+          />
+        </nz-form-item>
+        <!-- From -->
+        <nz-form-item>
+          <nz-form-label>From</nz-form-label>
+          <input
+            nz-input
+            disabled="true"
+            [ngModel]="project.data.attributes.from"
+          />
+        </nz-form-item>
+        <!-- To -->
+        <nz-form-item>
+          <nz-form-label>To</nz-form-label>
+          <input
+            nz-input
+            disabled="true"
+            [ngModel]="project.data.attributes.to"
+          />
+        </nz-form-item>
+        <!-- Iternal name -->
+        <nz-form-item>
+          <nz-form-label>Iternal name</nz-form-label>
+          <input
+            nz-input
+            disabled="true"
+            [ngModel]="project.data.attributes.internalName"
+          />
+        </nz-form-item>
+        <!-- Domain -->
+        <nz-form-item>
+          <nz-form-label>Domain</nz-form-label>
+          <input
+            nz-input
+            disabled="true"
+            [ngModel]="project.data.attributes.domain"
+          />
+        </nz-form-item>
+        <!-- Tech stack -->
+        <nz-form-item>
+          <nz-form-label>Tech stack</nz-form-label>
+          <input
+            nz-input
+            disabled="true"
+            [ngModel]="projectsSkillsToDisplay[index]"
+          />
+        </nz-form-item>
+        <!-- Description -->
+        <nz-form-item>
+          <nz-form-label>Description</nz-form-label>
+          <input
+            nz-input
+            disabled="true"
+            [ngModel]="project.data.attributes.description"
+          />
+        </nz-form-item>
+        <button nz-button (click)="deleteProject(project.data.id)">
+          Delete
+        </button>
+      </nz-collapse-panel>
+    </nz-collapse>
+  </ng-container>
   <button nz-button (click)="onSave()">Save</button>
   <button nz-button (click)="onCancelClick()">Cancel</button>
 </div>
-

@@ -4,21 +4,22 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { CvToGetData } from '../../interfaces/cv-to-get-interfaces/cv-to-get-data';
 import { CvService } from '../../services/cv-service.service';
-import { ProjectsToGetData } from '../../../projects/interfaces/projects-to-get-data';
 import { ProjectChoiceModalComponent } from '../project-choice-modal/project-choice-modal.component';
-import { filter, forkJoin, map, observable, Observable, of, switchMap } from 'rxjs';
+import {
+  filter,
+  forkJoin,
+  Observable,
+  switchMap,
+} from 'rxjs';
 import { ProjectService } from 'src/app/modules/projects/services/project.service';
 import { EntitiesService } from 'src/app/modules/entities/services/entities.service';
 import { ProjectsForkJoin } from '../../interfaces/projects-fork-join';
 import { ProjectToGet } from 'src/app/modules/projects/interfaces/project-to-get';
-import { SkillsResponse } from 'src/app/modules/entities/interfaces/skills-response';
-import { SkillsForkJoin } from '../../interfaces/skills-fork-join';
 import { EntityData } from 'src/app/modules/entities/interfaces/entity-data';
-import { ProjectToPost } from 'src/app/modules/projects/interfaces/project-to-post';
 import { CvToGet } from '../../interfaces/cv-interfaces/cv-to-get';
 
 @Component({
@@ -33,7 +34,7 @@ export class CvChoiceComponent implements OnInit {
   public listOfOptions: EntityData[] = [];
   public cvId: number;
   public choosenCv: CvToGetData;
-  public visibility: boolean = false;
+  public hidden: boolean = true;
   public selectedProjectsList: ProjectToGet[];
   private selectedProjectsIds: number[];
   public cvForm: FormGroup;
@@ -63,29 +64,32 @@ export class CvChoiceComponent implements OnInit {
   }
 
   onCvClick(cvId: number) {
-    this.visibility = true;
+    this.hidden = false;
     this.cvId = cvId;
     this.choosenCv = this.cvList.find((cv) => cv.id === this.cvId);
     this.selectedProjectsIds = this.choosenCv.attributes.projects;
     if (this.selectedProjectsIds.length) {
       this.forkJoinProjects(this.selectedProjectsIds).subscribe((response) => {
-        this.selectedProjectsList = response;
         this.changeDetectorRef.markForCheck();
-        this.selectedProjectsList.map((project) => {
-          this.projectsSkillsToDisplay.push(
-            project.data.attributes.skills.data.map(
-              (skill) => skill.attributes.name
-            )
-          );
-        });
-        console.log(this.projectsSkillsToDisplay);
+        this.selectedProjectsList = response;
+        this.projectsSkillsToDisplay = this.selectedProjectsList.reduce(
+          (acc, item) => {
+            acc.push(
+              item.data.attributes.skills.data.map(
+                (skill) => skill.attributes.name
+              )
+            );
+            return acc;
+          },
+          []
+        );
       });
     }
     this.patchAllValues(this.choosenCv);
   }
 
   createCv() {
-    this.visibility = true;
+    this.hidden = false;
     this.cvId = null;
     this.choosenCv = null;
     this.selectedProjectsIds = [];
@@ -96,7 +100,7 @@ export class CvChoiceComponent implements OnInit {
   public deleteCv(cvId: number) {
     this.cvService.deleteCvHTTP(cvId).subscribe((response) => {
       this.changeDetectorRef.markForCheck();
-      this.cvList.splice(this.cvList.findIndex((cv) => cv.id === response.data.id),1);
+      this.cvList = this.cvList.filter((cv) => cv.id != response.data.id);
     });
   }
 
@@ -118,33 +122,30 @@ export class CvChoiceComponent implements OnInit {
         // ),
         filter((value) => value),
         switchMap((selectedProjectsIdList) => {
+          this.selectedProjectsIds = selectedProjectsIdList;
           return this.forkJoinProjects(selectedProjectsIdList);
         })
       )
       .subscribe((response) => {
         this.changeDetectorRef.markForCheck();
         this.selectedProjectsList = response;
-        console.log(this.selectedProjectsList);
-        console.log(response);
       });
   }
 
   public deleteProject(projectId: number) {
-    this.selectedProjectsList.splice(
-      this.selectedProjectsList.findIndex(
-        (project) => project.data.id === projectId
-      ),
-      1
+    console.log(this.selectedProjectsIds);
+    this.selectedProjectsList = this.selectedProjectsList.filter(
+      (project) => project.data.id != projectId
     );
 
-    this.selectedProjectsIds.splice(
-      this.selectedProjectsIds.findIndex((id) => id === projectId),
-      1
+    this.selectedProjectsIds = this.selectedProjectsIds.filter(
+      (selectedProjectId) => selectedProjectId != projectId
     );
   }
 
   public onSave() {
     if (this.cvForm.valid) {
+      this.cvForm.markAllAsTouched();
       let observable: Observable<CvToGet>;
       const CvToPost = {
         name: this.cvForm.get('name').value,
@@ -152,22 +153,22 @@ export class CvChoiceComponent implements OnInit {
         projects: this.selectedProjectsIds,
         skills: this.cvForm.get('skills').value,
       };
-
-      if(this.cvId) {
-        observable = this.cvService.changeCvHTTP(CvToPost, this.cvId); 
+      if (this.cvId) {
+        observable = this.cvService.changeCvHTTP(CvToPost, this.cvId);
       } else {
         observable = this.cvService.createCvHTTP(CvToPost);
       }
-      observable.subscribe((response) => {
-        this.changeDetectorRef.markForCheck();
-        this.cvList.push(response.data);
-      });
+      observable
+        .pipe(switchMap(() => this.cvService.getAllCvHTTP()))
+        .subscribe((response) => {
+          this.changeDetectorRef.markForCheck();
+          this.cvList = response.data;
+        });
     }
   }
 
   onCancelClick() {
     this.createCv();
-    this.visibility = false;
   }
 
   private forkJoinProjects(ids: number[]): Observable<ProjectsForkJoin> {
