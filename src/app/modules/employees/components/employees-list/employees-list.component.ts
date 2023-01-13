@@ -37,8 +37,6 @@ export class EmployeesListComponent implements OnInit {
       .subscribe((employee) => {
         this.changeDetectorRef.markForCheck();
         this.listOfData = employee;
-        console.log(employee);
-        console.log(this.listOfData);
       });
 
   }

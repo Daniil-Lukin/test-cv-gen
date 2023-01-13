@@ -147,12 +147,7 @@ export class CvChoiceComponent implements OnInit {
     if (this.cvForm.valid) {
       this.cvForm.markAllAsTouched();
       let observable: Observable<CvToGet>;
-      const CvToPost = {
-        name: this.cvForm.get('name').value,
-        description: this.cvForm.get('description').value,
-        projects: this.selectedProjectsIds,
-        skills: this.cvForm.get('skills').value,
-      };
+      const CvToPost = {...this.cvForm.getRawValue(), projects: this.selectedProjectsIds};
       if (this.cvId) {
         observable = this.cvService.changeCvHTTP(CvToPost, this.cvId);
       } else {

@@ -31,16 +31,13 @@ export class ProjectChoiceModalComponent implements OnInit {
     this.projectService.getAllProjectsHTTP().subscribe((projects) => {
       this.changeDetectorRef.markForCheck();
       this.fillCheckboxGroup(projects);
-      console.log(this.nzModalRef);
     });
   }
 
   public projectSelected(value: CheckboxGroup[]) {
-    console.log(this.selectedProjectsId);
     this.selectedProjectsId = value
       .filter((project) => project.checked === true)
       .map((filteredProjects) => filteredProjects.value);
-    console.log(this.selectedProjectsId);
   }
 
   public onCancel() {

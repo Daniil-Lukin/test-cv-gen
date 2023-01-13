@@ -30,7 +30,6 @@ export class EntitiesService {
 
   public setEntityType(): void {
     this._entityType = this.router.url.split('/').pop();
-    console.log(this._entityType);
   }
 
   public getEntityHTTP(id: number, entityType = 'skills'): Observable<EntityToGet> {

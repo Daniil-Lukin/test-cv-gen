@@ -2,16 +2,13 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Input,
   OnInit,
 } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { EntityData } from 'src/app/modules/entities/interfaces/entity-data';
 import { EntitiesService } from 'src/app/modules/entities/services/entities.service';
-import { ProjectToGet } from '../../interfaces/project-to-get';
-import { ProjectToPost } from '../../interfaces/project-to-post';
 import { ProjectsToGetData } from '../../interfaces/projects-to-get-data';
 import { ProjectService } from '../../services/project.service';
 
@@ -24,7 +21,7 @@ import { ProjectService } from '../../services/project.service';
 export class ProjectInfoComponent implements OnInit {
   public projectForm: FormGroup;
   public listOfOptions: EntityData[] = [];
-  @Input() id = this.activatedRoute.snapshot.params['id'];
+  private id = this.activatedRoute.snapshot.params['id'];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -81,6 +78,7 @@ export class ProjectInfoComponent implements OnInit {
     const skillsId = skills.data.map((skill) => skill.id);
     this.projectForm.patchValue({ skills: skillsId });
   }
+  
   public setId(newId) {
     this.id = newId;
   }
