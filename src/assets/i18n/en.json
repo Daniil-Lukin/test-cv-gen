@@ -22,5 +22,74 @@
       "passwordRepeat": "Please repeat your Password correctly!",
       "nameError": "Please input your name!"
     }
+  },
+
+  "home-page": {
+    "slider": {
+      "entities": "Entities",
+      "employees": "Employees",
+      "projects": "Projects",
+      "cvs": "CVs"
+    }
+  },
+
+  "entities": {
+    "entity": {
+      "addButton": "+ Add entity", 
+      "emptyList": "Empty list"
+    },
+    "modal": {
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "submit": "Submit"
+    },
+    "selection": {
+      "skills": "Skills",
+      "responsibilities": "Responsibilities",
+      "languages": "Languages"
+    }
+  },
+
+  "projects": {
+    "project-info": {
+      "submit": "Submit changes",
+      "name": "Name",
+      "from": "From",
+      "to": "To",
+      "internalName": "Internal Name",
+      "domain": "Domain",
+      "techStack": "Tech Stack",
+      "description": "Description" 
+    },
+    "project-display": {
+      "create": "Create new project"
+    }
+  },
+
+  "employees": {
+    "employeeEdit": {
+      "name": "Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "save": "Save",
+      "cancel": "Cancel"
+    },
+    "employeeList": {
+      "name": "Name",
+      "lastName": "Last Name",
+      "email": "Email"
+    }
+  },
+
+  "CVs": {
+    "cvChoice": {
+      "addProject": "Add project",
+      "save": "Save",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "name": "Name",
+      "techStack": "Tech Stack",
+      "description": "Description"
+    }
   }
 }

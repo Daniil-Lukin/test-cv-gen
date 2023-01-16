@@ -53,7 +53,7 @@ export class CvChoiceComponent implements OnInit {
       this.cvList = cvs.data;
       this.changeDetectorRef.markForCheck();
     });
-    this.entitiesService.getEntity('skills').subscribe((value) => {
+    this.entitiesService.getEntityArrayHTTP('skills').subscribe((value) => {
       this.listOfOptions = value;
     });
     this.cvForm = this.formBuilder.group({

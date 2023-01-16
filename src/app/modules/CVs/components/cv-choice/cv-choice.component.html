@@ -20,23 +20,23 @@
 </div>
 <div class="cv-edit-wrapper" [hidden]="hidden">
   <form nz-form nzLayout="inline" [formGroup]="cvForm" (ngSubmit)="onSave()">
-    <!-- email -->
+    <!-- Description -->
     <nz-form-item>
-      <nz-form-label>Description</nz-form-label>
+      <nz-form-label>{{'CVs.cvChoice.description' | translate}}</nz-form-label>
       <nz-form-control nzErrorTip="Fill the description">
         <input nz-input formControlName="description" type="text" />
       </nz-form-control>
     </nz-form-item>
     <!-- Name -->
     <nz-form-item>
-      <nz-form-label>Name</nz-form-label>
+      <nz-form-label>{{'CVs.cvChoice.name' | translate}}</nz-form-label>
       <nz-form-control nzErrorTip="Fill the name">
         <input nz-input formControlName="name" type="text" />
       </nz-form-control>
     </nz-form-item>
     <!-- Skills -->
     <nz-form-item>
-      <nz-form-label nzRequired>Tech Stack</nz-form-label>
+      <nz-form-label nzRequired>{{'CVs.cvChoice.techStack' | translate}}</nz-form-label>
       <nz-select
         nzMode="tags"
         nzPlaceHolder="Tech stack"
@@ -52,7 +52,7 @@
   </form>
   <div class="button-wrapper">
     <button nz-button nzType="primary" (click)="addProject()">
-      Add project
+      {{'CVs.cvChoice.addProject' | translate}}
     </button>
   </div>
   <ng-container *ngIf="selectedProjectsList?.length">
@@ -62,7 +62,7 @@
     >
         <!-- Name -->
         <nz-form-item>
-          <nz-form-label>Name</nz-form-label>
+          <nz-form-label>{{'projects.project-info.name' | translate}}</nz-form-label>
           <input
             nz-input
             disabled="true"
@@ -71,7 +71,7 @@
         </nz-form-item>
         <!-- From -->
         <nz-form-item>
-          <nz-form-label>From</nz-form-label>
+          <nz-form-label>{{'projects.project-info.from' | translate}}</nz-form-label>
           <input
             nz-input
             disabled="true"
@@ -80,7 +80,7 @@
         </nz-form-item>
         <!-- To -->
         <nz-form-item>
-          <nz-form-label>To</nz-form-label>
+          <nz-form-label>{{'projects.project-info.to' | translate}}</nz-form-label>
           <input
             nz-input
             disabled="true"
@@ -89,7 +89,7 @@
         </nz-form-item>
         <!-- Iternal name -->
         <nz-form-item>
-          <nz-form-label>Iternal name</nz-form-label>
+          <nz-form-label>{{'projects.project-info.internalName' | translate}}</nz-form-label>
           <input
             nz-input
             disabled="true"
@@ -98,7 +98,7 @@
         </nz-form-item>
         <!-- Domain -->
         <nz-form-item>
-          <nz-form-label>Domain</nz-form-label>
+          <nz-form-label>{{'projects.project-info.domain' | translate}}</nz-form-label>
           <input
             nz-input
             disabled="true"
@@ -107,7 +107,7 @@
         </nz-form-item>
         <!-- Tech stack -->
         <nz-form-item>
-          <nz-form-label>Tech stack</nz-form-label>
+          <nz-form-label>{{'projects.project-info.techStack' | translate}}</nz-form-label>
           <input
             nz-input
             disabled="true"
@@ -116,7 +116,7 @@
         </nz-form-item>
         <!-- Description -->
         <nz-form-item>
-          <nz-form-label>Description</nz-form-label>
+          <nz-form-label>{{'projects.project-info.description' | translate}}</nz-form-label>
           <input
             nz-input
             disabled="true"
@@ -124,11 +124,11 @@
           />
         </nz-form-item>
         <button nz-button (click)="deleteProject(project.data.id)">
-          Delete
+          {{'CVs.cvChoice.delete' | translate}}
         </button>
       </nz-collapse-panel>
     </nz-collapse>
   </ng-container>
-  <button nz-button (click)="onSave()">Save</button>
-  <button nz-button (click)="onCancelClick()">Cancel</button>
+  <button nz-button (click)="onSave()">{{'CVs.cvChoice.save' | translate}}</button>
+  <button nz-button (click)="onCancelClick()">{{'CVs.cvChoice.cancel' | translate}}</button>
 </div>

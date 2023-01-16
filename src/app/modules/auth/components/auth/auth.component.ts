@@ -27,7 +27,7 @@ export class AuthComponent implements OnInit {
       email: [null, Validators.compose([Validators.required, Validators.email])],
       password: [null, Validators.compose([Validators.required, Validators.minLength(6)])],
       remember: [true],
-    }); //Validator compose
+    });
   }
 
   submitForm(): void {
@@ -44,7 +44,6 @@ export class AuthComponent implements OnInit {
           this.router.navigate(['home'])
         });
     }
-    // this.router.navigate(['home'])
   }
 
   localizationButtonClick() {

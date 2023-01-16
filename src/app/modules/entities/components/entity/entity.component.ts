@@ -4,21 +4,22 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { EMPTY, filter, map, Subject, switchMap } from 'rxjs';
+import { filter, switchMap } from 'rxjs';
 import { EntityData } from '../../interfaces/entity-data';
 import { EntitiesService } from '../../services/entities.service';
 import { ModalEditComponent } from '../modal-edit/modal-edit.component';
 
 @Component({
-  selector: 'app-entitie',
-  templateUrl: './entitie.component.html',
-  styleUrls: ['./entitie.component.scss'],
+  selector: 'app-entity',
+  templateUrl: './entity.component.html',
+  styleUrls: ['./entity.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EntitieComponent implements OnInit {
-  public entitiesArray: EntityData[] = []; //Заполнять массив опр сущности в зависимости от того, в какой вкладке я нахожусь
+export class EntityComponent implements OnInit {
+  public entitiesArray: EntityData[] = [];
   public isLoading: boolean = false;
   private entityType = this.activatedRoute.snapshot.params['entity'];
 
@@ -31,7 +32,7 @@ export class EntitieComponent implements OnInit {
 
   ngOnInit(): void {
     this.entitiesService
-      .getEntity(this.entityType)
+      .getEntityArrayHTTP(this.entityType)
       .subscribe((value) => {
         this.entitiesArray = value;
         this.changeDetectionRef.markForCheck();
@@ -48,9 +49,9 @@ export class EntitieComponent implements OnInit {
     });
     modal.afterClose.pipe(
       filter(Boolean),
-      switchMap(() => this.entitiesService.getEntityArrayHTTP())
+      switchMap(() => this.entitiesService.getEntityArrayHTTP(this.entityType))
     ).subscribe((data) => {
-      this.entitiesService.updateStoragedData(data);
+      this.entitiesArray = data;
     });
   }
 
@@ -60,11 +61,10 @@ export class EntitieComponent implements OnInit {
       nzContent: ModalEditComponent,
     });
     modal.afterClose.pipe(
-      map((isChanged) => {
-        if(isChanged) {
-          this.entitiesService.getEntityArrayHTTP().subscribe();
-        }
-      })
-    ).subscribe();
+      filter(Boolean),
+      switchMap(() => this.entitiesService.getEntityArrayHTTP(this.entityType))
+    ).subscribe((data) => {
+      this.entitiesArray = data;
+    });
   }
 }

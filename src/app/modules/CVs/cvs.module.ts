@@ -13,6 +13,7 @@ import { ProjectChoiceModalComponent } from './components/project-choice-modal/p
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     NzCheckboxModule,
     NzModalModule,
     NzSelectModule, 
+    TranslateModule,
   ],
   exports: [
     CvChoiceComponent

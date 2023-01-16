@@ -1,12 +1,12 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { CvPageComponent } from "./components/cv-page/cv-page.component";
+import { HomePageComponent } from "./components/home-page/home-page.component";
 
 const routes: Routes = [
   {
     path: '',
-    component: CvPageComponent,
+    component: HomePageComponent,
     children: [
       {
         path: 'entities',
@@ -32,4 +32,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class CvPageRoutingModule {}
+export class HomePageRoutingModule {}

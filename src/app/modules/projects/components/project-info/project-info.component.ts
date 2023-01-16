@@ -32,7 +32,7 @@ export class ProjectInfoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.entitiesService.getEntity('skills').subscribe((value) => {
+    this.entitiesService.getEntityArrayHTTP('skills').subscribe((value) => {
       this.listOfOptions = value;
     });
 

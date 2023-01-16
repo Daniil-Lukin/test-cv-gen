@@ -16,7 +16,7 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () =>
-      import('./modules/cv-page/cv-page.module').then((m) => m.CvPageModule),
+      import('./modules/cv-page/home-page.module').then((m) => m.HomePageModule),
     canActivate: [AuthGuard],
   },
   

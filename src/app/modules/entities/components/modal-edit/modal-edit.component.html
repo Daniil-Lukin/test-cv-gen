@@ -2,9 +2,9 @@
   <input nz-input [(ngModel)]="newName">
 </div>
 <div *nzModalFooter class="nzModalFooter">
-  <button nz-button nzType="primary" (click)="deleteClick()">Delete</button>
+  <button nz-button nzType="primary" (click)="deleteClick()">{{"entities.modal.delete" | translate}}</button>
   <div class="primary_buttons">
-    <button nz-button nzType="default" (click)="destroyModal()">Cancel</button>
-    <button nz-button nzType="primary" (click)="submitClick()">Submit</button>
+    <button nz-button nzType="default" (click)="destroyModal()">{{"entities.modal.cancel" | translate}}</button>
+    <button nz-button nzType="primary" (click)="submitClick()">{{"entities.modal.submit" | translate}}</button>
   </div>
 </div>

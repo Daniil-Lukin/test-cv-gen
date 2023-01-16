@@ -22,5 +22,74 @@
       "repeatPassword": "Пожалуйста, повторите свой пароль корректно!",
       "nameError": "Пожалуйста, введите своё имя!"
     }
+  },
+
+  "home-page": {
+    "slider": {
+      "entities": "Сущности",
+      "employees": "Работники",
+      "projects": "Проекты",
+      "cvs": "CVs"
+    }
+  },
+
+  "entities": {
+    "entity": {
+      "addButton": "+ Добавить сущности", 
+      "emptyList": "Пустой лист"
+    },
+    "modal": {
+      "delete": "Удалить",
+      "cancel": "Отмена",
+      "submit": "Подтвердить"
+    },
+    "selection": {
+      "skills": "Способности",
+      "responsibilities": "Ответственности",
+      "languages": "Языки"
+    }
+  },
+
+  "projects": {
+    "project-info": {
+      "submit": "Поддтвердить изменения",
+      "name": "Имя",
+      "from": "С",
+      "to": "По",
+      "internalName": "Внутреннее имя",
+      "domain": "Домен",
+      "techStack": "Набор технологий",
+      "description": "Описание" 
+    },
+    "project-display": {
+      "create": "Создать новый проект"
+    }
+  },
+
+  "employees": {
+    "employeeEdit": {
+      "name": "Имя",
+      "lastName": "Фамилия",
+      "email": "Почта",
+      "save": "Сохранить",
+      "cancel": "Отмена"
+    },
+    "employeeList": {
+      "name": "Имя",
+      "lastName": "Фамилия",
+      "email": "Почта"
+    }
+  },
+
+  "CVs": {
+    "cvChoice": {
+      "addProject": "Добавить проект",
+      "save": "Сохранить",
+      "cancel": "Отмена",
+      "delete": "Удалить",
+      "name": "Имя",
+      "techStack": "Набор технологий",
+      "description": "Описание"
+    }
   }
 }

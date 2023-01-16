@@ -1,11 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NzModalRef } from 'ng-zorro-antd/modal';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { EntitiesService } from '../../services/entities.service';
 
 @Component({
@@ -17,25 +13,35 @@ import { EntitiesService } from '../../services/entities.service';
 export class ModalEditComponent {
   @Input() id: number;
   public newName: string;
+  private entityType = this.activatedRoute.snapshot.params['entity'];
 
   constructor(
     private nzModalRef: NzModalRef,
     private entitiesService: EntitiesService,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   public submitClick(): void {
     let observable: Observable<unknown>;
     if (this.id) {
-      observable = this.entitiesService.changeEntity(this.newName, this.id);
+      observable = this.entitiesService.changeEntityHTTP(
+        this.newName,
+        this.id,
+        this.entityType
+      );
     } else {
-      observable = this.entitiesService.createEntity(this.newName);
+      observable = this.entitiesService.createEntityHTTP(
+        this.newName,
+        this.entityType
+      );
     }
-    observable.subscribe(() => this.destroyModal(true)); //Захендлить ошибку, и если успешно то дестрой
+    observable.subscribe(() => this.destroyModal(true));
   }
 
   public deleteClick(): void {
     this.entitiesService
-      .deleteEntity(this.id).subscribe(() => this.destroyModal(true))
+      .deleteEntityHTTP(this.id, this.entityType)
+      .subscribe(() => this.destroyModal(true));
   }
 
   public destroyModal(isChanged = false): void {

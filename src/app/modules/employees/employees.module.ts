@@ -11,7 +11,8 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { CvsModule } from '../CVs/cvs.module';
-import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -28,6 +29,7 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
     NzInputModule,
     NzFormModule,
     NzButtonModule,
+    TranslateModule,
   ]
 })
 export class EmployeesModule { }

@@ -8,8 +8,8 @@
       <li nz-menu-item>
         <span nz-icon nzType="bell" nzTheme="outline"></span>
       </li>
-      <li nz-menu-item>
-        <span nz-icon nzType="search" nzTheme="outline"></span>
+      <li nz-menu-item (click)="localizationButtonClick()">
+        <span nz-icon nzType="translation" nzTheme="outline"></span>
       </li>
     </ul>
   </nz-header>
@@ -18,22 +18,18 @@
       <ul nz-menu nzMode="inline" nzSelectable="false" class="sider-menu">
         <li nz-menu-item>
           <span nz-icon nzType="dashboard" nzTheme="outline"></span>
-          <span>Entities</span>
+          <span>{{'home-page.slider.entities' | translate}}</span>
           <a routerLink='entities'></a> 
         </li>
         <li nz-menu-item>
           <span nz-icon nzType="form" nzTheme="outline"></span>
-          <span>Employees</span>
+          <span>{{'home-page.slider.employees' | translate}}</span>
           <a routerLink="employees"></a>
         </li>
         <li nz-menu-item>
           <span nz-icon nzType="database" nzTheme="outline"></span>
-          <span>Projects</span>
+          <span>{{'home-page.slider.projects' | translate}}</span>
           <a routerLink='projects'></a>
-        </li>
-        <li nz-menu-item>
-          <span nz-icon nzType="diff" nzTheme="outline"></span>
-          <span>CVs</span>
         </li>
       </ul>
     </nz-sider>
