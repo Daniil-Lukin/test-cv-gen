@@ -2,8 +2,8 @@
   <nz-header>
     <div class="logo"></div>
     <ul nz-menu nzSelectable="false" nzTheme="dark" nzMode="horizontal" class="header-menu">
-      <li nz-menu-item>
-        <span nz-icon  nzType="question-circle" nzTheme="outline"></span>
+      <li nz-menu-item (click)="logOut()">
+        <span nz-icon nzType="logout" nzTheme="outline"></span>
       </li>
       <li nz-menu-item>
         <span nz-icon nzType="bell" nzTheme="outline"></span>
