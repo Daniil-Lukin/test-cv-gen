@@ -69,6 +69,10 @@
   },
 
   "employees": {
+    "employeeDisplay": {
+      "CV": "Резюме",
+      "info": "Информация"
+    },
     "employeeEdit": {
       "name": "Имя",
       "lastName": "Фамилия",
