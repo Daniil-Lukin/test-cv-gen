@@ -28,6 +28,7 @@ export class EntityComponent implements OnInit {
     private modalService: NzModalService,
     private changeDetectionRef: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute,
+    private translateService: TranslateService,
   ) {}
 
   ngOnInit(): void {
@@ -41,7 +42,7 @@ export class EntityComponent implements OnInit {
 
   onEntityClick(id: number, name: string) {
     const modal = this.modalService.create({
-      nzTitle: `Editing ${name} entity`,
+      nzTitle: this.translateService.instant('entities.modal.titleEdit', {name: name}),
       nzContent: ModalEditComponent,
       nzComponentParams: {
         id: id,
@@ -57,7 +58,7 @@ export class EntityComponent implements OnInit {
 
   onAddClick() {
     const modal = this.modalService.create({
-      nzTitle: `Create new entity`,
+      nzTitle: this.translateService.instant('entities.modal.titleCreate'),
       nzContent: ModalEditComponent,
     });
     modal.afterClose.pipe(

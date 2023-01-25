@@ -23,14 +23,14 @@
     <!-- Description -->
     <nz-form-item>
       <nz-form-label>{{'CVs.cvChoice.description' | translate}}</nz-form-label>
-      <nz-form-control nzErrorTip="Fill the description">
+      <nz-form-control [nzErrorTip]="'CVs.cvChoice.errorTip.description' | translate">
         <input nz-input formControlName="description" type="text" />
       </nz-form-control>
     </nz-form-item>
     <!-- Name -->
     <nz-form-item>
       <nz-form-label>{{'CVs.cvChoice.name' | translate}}</nz-form-label>
-      <nz-form-control nzErrorTip="Fill the name">
+      <nz-form-control [nzErrorTip]="'CVs.cvChoice.errorTip.name' | translate">
         <input nz-input formControlName="name" type="text" />
       </nz-form-control>
     </nz-form-item>
@@ -39,7 +39,7 @@
       <nz-form-label nzRequired>{{'CVs.cvChoice.techStack' | translate}}</nz-form-label>
       <nz-select
         nzMode="tags"
-        nzPlaceHolder="Tech stack"
+        [nzPlaceHolder]="'CVs.cvChoice.techStack' | translate"
         formControlName="skills"
       >
         <nz-option

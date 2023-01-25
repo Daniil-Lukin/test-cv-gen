@@ -35,10 +35,12 @@
 
   "entities": {
     "entity": {
-      "addButton": "+ Добавить сущности", 
+      "addButton": "+ Добавить сущность", 
       "emptyList": "Пустой лист"
     },
     "modal": {
+      "titleCreate": "Создание новой сущности",
+      "titleEdit": "Изменение сущности {{ name }}",
       "delete": "Удалить",
       "cancel": "Отмена",
       "submit": "Подтвердить"
@@ -72,7 +74,12 @@
       "lastName": "Фамилия",
       "email": "Почта",
       "save": "Сохранить",
-      "cancel": "Отмена"
+      "cancel": "Отмена",
+      "errorTip": {
+        "name": "Введите имя",
+        "lastName": "Введите фамилию",
+        "email": "Введите почту"
+      }
     },
     "employeeList": {
       "name": "Имя",
@@ -89,7 +96,11 @@
       "delete": "Удалить",
       "name": "Имя",
       "techStack": "Набор технологий",
-      "description": "Описание"
+      "description": "Описание",
+      "errorTip": {
+        "description": "Заполните описание",
+        "name": "Введите имя"
+      }
     }
   }
 }

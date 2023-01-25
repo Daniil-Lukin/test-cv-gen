@@ -39,6 +39,8 @@
       "emptyList": "Empty list"
     },
     "modal": {
+      "titleCreate": "Create new entity",
+      "titleEdit": "Editing {{ name }} entity",
       "delete": "Delete",
       "cancel": "Cancel",
       "submit": "Submit"
@@ -72,7 +74,12 @@
       "lastName": "Last Name",
       "email": "Email",
       "save": "Save",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "errorTip": {
+        "name": "Fill the name",
+        "lastName": "Fill the last name",
+        "email": "Fill the email"
+      }
     },
     "employeeList": {
       "name": "Name",
@@ -89,7 +96,11 @@
       "delete": "Delete",
       "name": "Name",
       "techStack": "Tech Stack",
-      "description": "Description"
+      "description": "Description",
+      "errorTip": {
+        "description": "Fill the description",
+        "name": "Fill the name"
+      }
     }
   }
 }
