@@ -12,8 +12,8 @@ import { EntitiesService } from '../../services/entities.service';
 })
 export class ModalEditComponent {
   @Input() id: number;
+  @Input() entityType: string;
   public newName: string;
-  private entityType = this.activatedRoute.snapshot.params['entity'];
 
   constructor(
     private nzModalRef: NzModalRef,

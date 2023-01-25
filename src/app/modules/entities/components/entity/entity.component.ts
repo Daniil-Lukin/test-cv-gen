@@ -46,12 +46,14 @@ export class EntityComponent implements OnInit {
       nzContent: ModalEditComponent,
       nzComponentParams: {
         id: id,
+        entityType: this.entityType,
       },
     });
     modal.afterClose.pipe(
       filter(Boolean),
       switchMap(() => this.entitiesService.getEntityArrayHTTP(this.entityType))
     ).subscribe((data) => {
+      this.changeDetectionRef.markForCheck();
       this.entitiesArray = data;
     });
   }
@@ -60,11 +62,15 @@ export class EntityComponent implements OnInit {
     const modal = this.modalService.create({
       nzTitle: this.translateService.instant('entities.modal.titleCreate'),
       nzContent: ModalEditComponent,
+      nzComponentParams: {
+        entityType: this.entityType,
+      }
     });
     modal.afterClose.pipe(
       filter(Boolean),
       switchMap(() => this.entitiesService.getEntityArrayHTTP(this.entityType))
     ).subscribe((data) => {
+      this.changeDetectionRef.markForCheck();
       this.entitiesArray = data;
     });
   }
