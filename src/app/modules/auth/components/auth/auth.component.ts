@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { en_US, NzI18nService, ru_RU, } from 'ng-zorro-antd/i18n';
+import { enUS, ru } from 'date-fns/locale';
 import { StorageService } from 'src/app/modules/shared/services/storage.service';
 import { AuthService } from '../../services/auth.service';
 
@@ -19,7 +21,8 @@ export class AuthComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private storageService: StorageService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private i18n: NzI18nService,
   ) {}
 
   ngOnInit(): void {
@@ -49,8 +52,12 @@ export class AuthComponent implements OnInit {
   localizationButtonClick() {
     if (this.translateService.store.currentLang === 'en') {
       this.translateService.use('ru');
+      this.i18n.setLocale(ru_RU);
+      this.i18n.setDateLocale(ru);
     } else {
       this.translateService.use('en');
+      this.i18n.setLocale(en_US);
+      this.i18n.setDateLocale(enUS)
     }
   }
 

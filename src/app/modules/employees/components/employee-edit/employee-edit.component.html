@@ -3,21 +3,21 @@
     <nz-form-item>
       <!-- Name -->
       <nz-form-label>{{'employees.employeeEdit.name' | translate}}</nz-form-label>
-      <nz-form-control nzErrorTip="Fill the name">
+      <nz-form-control [nzErrorTip]="'employees.employeeEdit.errorTip.name' | translate">
         <input nz-input formControlName="firstName" type="text">
       </nz-form-control>
     </nz-form-item>
     <!-- last name -->
     <nz-form-item>
       <nz-form-label>{{'employees.employeeEdit.lastName' | translate}}</nz-form-label>
-      <nz-form-control nzErrorTip="Fill the last name">
+      <nz-form-control [nzErrorTip]="'employees.employeeEdit.errorTip.lastName' | translate">
         <input nz-input formControlName="lastName" type="text">
       </nz-form-control>
     </nz-form-item>
     <!-- email -->
     <nz-form-item>
       <nz-form-label>{{'employees.employeeEdit.email' | translate}}</nz-form-label>
-      <nz-form-control nzErrorTip="Fill the email">
+      <nz-form-control [nzErrorTip]="'employees.employeeEdit.errorTip.email' | translate">
         <input nz-input formControlName="email" type="text">
       </nz-form-control>
     </nz-form-item>
