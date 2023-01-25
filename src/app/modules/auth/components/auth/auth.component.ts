@@ -38,18 +38,20 @@ export class AuthComponent implements OnInit {
     if (this.authForm.valid) {
       this.authService
         .signIn(this.email, this.password)
-        .subscribe((response) => {
+        .subscribe({
+          next: (response) => {
           this.storageService.setUser(
             response.jwt,
             this.remember,
             this.translateService.store.currentLang
           );
           this.router.navigate(['home'])
-        });
+        },
+      });
     }
   }
 
-  localizationButtonClick() {
+  public localizationButtonClick() {
     if (this.translateService.store.currentLang === 'en') {
       this.translateService.use('ru');
       this.i18n.setLocale(ru_RU);
@@ -60,6 +62,8 @@ export class AuthComponent implements OnInit {
       this.i18n.setDateLocale(enUS)
     }
   }
+
+
 
   get email() {
     return this.authForm.get('email')?.value;

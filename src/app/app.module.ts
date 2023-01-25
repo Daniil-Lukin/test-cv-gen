@@ -21,6 +21,7 @@ import { registerLocaleData } from '@angular/common';
 import { StorageService } from './modules/shared/services/storage.service';
 import { JwtInterceptor } from './modules/shared/interceptors/jwt-interceptor.interceptor';
 import { enUS } from 'date-fns/locale';
+import { NotificationInterceptor } from './modules/shared/interceptors/notification.interceptor';
 registerLocaleData(en);
 registerLocaleData(ru);
 
@@ -86,6 +87,11 @@ registerLocaleData(ru);
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: NotificationInterceptor,
       multi: true,
     }
   ],
