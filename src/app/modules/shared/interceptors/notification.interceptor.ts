@@ -17,11 +17,20 @@ export class NotificationInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       catchError((failedReq: HttpErrorResponse) => {
-        let errorMessage = failedReq.error.error.message;
-        this.notificationService.error(
-          failedReq.error.error.name,
-          failedReq.error.error.message,
-        )
+        let errorMessage = '';
+        if(failedReq.error instanceof ErrorEvent) {
+          this.notificationService.error(
+            failedReq.error.error.name,
+            failedReq.error.error.message,
+          )
+          errorMessage = failedReq.error.error.message;
+        } else {
+          this.notificationService.error(
+            failedReq.status.toString(),
+            failedReq.statusText,
+          )
+          errorMessage = failedReq.statusText;
+        }
         return throwError(errorMessage);
       })
     );;
