@@ -19,10 +19,12 @@ export class NotificationInterceptor implements HttpInterceptor {
       catchError((failedReq: HttpErrorResponse) => {
         let errorMessage = '';
         if(failedReq.error instanceof ErrorEvent) {
+          // const title = {...failedReq} сделать деструктуризацию и проверку на error.error
           this.notificationService.error(
             failedReq.error.error.name,
             failedReq.error.error.message,
           )
+          console.log(failedReq);
           errorMessage = failedReq.error.error.message;
         } else {
           this.notificationService.error(
@@ -30,9 +32,10 @@ export class NotificationInterceptor implements HttpInterceptor {
             failedReq.statusText,
           )
           errorMessage = failedReq.statusText;
+          console.log(failedReq);
         }
-        return throwError(errorMessage);
+        return throwError(failedReq);
       })
-    );;
+    );
   }
 }

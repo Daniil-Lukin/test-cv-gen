@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { en_US, NzI18nService, ru_RU } from 'ng-zorro-antd/i18n';
 import { enUS, ru } from 'date-fns/locale';
-import { StorageService } from 'src/app/modules/shared/services/storage.service';
+import { StorageService } from 'src/app/core/services/storage.service';
 import { Route, Router } from '@angular/router';
 
 @Component({
