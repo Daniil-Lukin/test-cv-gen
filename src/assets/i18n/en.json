@@ -106,5 +106,9 @@
         "name": "Fill the name"
       }
     }
-  }
+  },
+  "From": "From",
+  "To": "To",
+  "Name": "Name",
+  "Domain": "Domain"
 }
