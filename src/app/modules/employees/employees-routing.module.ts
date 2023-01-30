@@ -12,6 +12,7 @@ const routes: Routes = [
   {
     path:':id',
     component: EmployeeDisplayComponent,
+    data: {title: 'headers.title.employees', description: 'headers.description.employees.employee-edit'}
   }
 ];
 

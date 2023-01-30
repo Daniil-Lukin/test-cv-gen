@@ -33,7 +33,7 @@ export class CvChoiceComponent implements OnInit {
   public projectsSkillsToDisplay = [];
   public listOfOptions: EntityData[] = [];
   public cvId: number;
-  public choosenCv: CvToGetData;
+  public chosenCv: CvToGetData;
   public hidden: boolean = true;
   public selectedProjectsList: ProjectToGet[];
   private selectedProjectsIds: number[];
@@ -66,8 +66,8 @@ export class CvChoiceComponent implements OnInit {
   onCvClick(cvId: number) {
     this.hidden = false;
     this.cvId = cvId;
-    this.choosenCv = this.cvList.find((cv) => cv.id === this.cvId);
-    this.selectedProjectsIds = this.choosenCv.attributes.projects;
+    this.chosenCv = this.cvList.find((cv) => cv.id === this.cvId);
+    this.selectedProjectsIds = this.chosenCv.attributes.projects;
     if (this.selectedProjectsIds.length) {
       this.forkJoinProjects(this.selectedProjectsIds).subscribe((response) => {
         this.changeDetectorRef.markForCheck();
@@ -85,13 +85,13 @@ export class CvChoiceComponent implements OnInit {
         );
       });
     }
-    this.patchAllValues(this.choosenCv);
+    this.patchAllValues(this.chosenCv);
   }
 
   createCv() {
     this.hidden = false;
     this.cvId = null;
-    this.choosenCv = null;
+    this.chosenCv = null;
     this.selectedProjectsIds = [];
     this.selectedProjectsList = [];
     this.cvForm.reset();

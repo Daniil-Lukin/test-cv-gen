@@ -18,6 +18,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./modules/home/home-page.module').then((m) => m.HomePageModule),
     canActivate: [AuthGuard],
+    data: {title: 'headers.title.home', description: 'headers.description.home'}
   },
   
 ];

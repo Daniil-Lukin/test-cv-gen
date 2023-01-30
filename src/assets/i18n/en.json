@@ -110,5 +110,31 @@
   "From": "From",
   "To": "To",
   "Name": "Name",
-  "Domain": "Domain"
+  "Domain": "Domain",
+
+  "headers": {
+    "title": {
+      "home": "Home page",
+      "entities": "Entities page",
+      "projects": "Projects page",
+      "employees": "Employees page",
+      "cvs": "CV page"
+    },
+    "description": {
+      "home": "Starting page of application",
+      "entities": {
+        "selection-page":"Chose entity type",
+        "entity": "Create or edit entities"
+      },
+      "projects": {
+        "project-info": "Edit project",
+        "project-display": "Chose one project to edit it or create new"
+      },
+      "employees": {
+        "employee-display": "Chose one employee to edit his data or to create or edit CV",
+        "employee-edit": "Edit employee and his CV"
+      },
+      "cvs": "Create or edit CV"
+    }
+  }
 }

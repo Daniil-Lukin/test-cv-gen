@@ -36,8 +36,9 @@
     <nz-layout class="inner-layout">
       <div class="description-container">
         <app-breadcrumb></app-breadcrumb>
-        <h2>Title</h2>
-        <h3>Description</h3>
+        {{changeHeaders() | async}}
+        <h2>{{title | translate}}</h2>
+        <h3>{{description | translate}}</h3>
       </div>
       <nz-content>
         <router-outlet></router-outlet>

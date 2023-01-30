@@ -12,6 +12,7 @@ const routes: Routes = [
   {
     path: ':entity',
     component: EntityComponent,
+    data: {title: 'headers.title.entities', description: 'headers.description.entities.entity'}
   },
 ];
 

@@ -11,6 +11,7 @@ const routes: Routes = [
   {
     path: ':id',
     component: ProjectInfoComponent,
+    data: {title: 'headers.title.projects', description: 'headers.description.projects.project-info'}
   }
 ];
 

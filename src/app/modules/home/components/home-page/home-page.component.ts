@@ -3,7 +3,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { en_US, NzI18nService, ru_RU } from 'ng-zorro-antd/i18n';
 import { enUS, ru } from 'date-fns/locale';
 import { StorageService } from 'src/app/core/services/storage.service';
-import { Route, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Route, Router } from '@angular/router';
+import { filter, map, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-home-page',
@@ -12,11 +13,15 @@ import { Route, Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePageComponent implements OnInit {
+  public title: string;
+  public description: string;
+
   constructor(
     private storageService: StorageService,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private translateService: TranslateService,
-    private i18n: NzI18nService,
+    private i18n: NzI18nService
   ) {}
 
   ngOnInit(): void {}
@@ -29,7 +34,7 @@ export class HomePageComponent implements OnInit {
     } else {
       this.translateService.use('en');
       this.i18n.setLocale(en_US);
-      this.i18n.setDateLocale(enUS)
+      this.i18n.setDateLocale(enUS);
     }
   }
 
@@ -37,4 +42,26 @@ export class HomePageComponent implements OnInit {
     this.storageService.removeUser();
     this.router.navigate(['/login']);
   }
+
+  public changeHeaders() {
+    return this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd),
+      switchMap(() => {
+        const routerUrl = this.router.url.split('/').slice(2); // -2 потому что массив начинается с ['', 'home']
+        let dataSource = this.activatedRoute;
+
+        for(let i = 0; i < routerUrl.length; i++) {
+          dataSource = dataSource?.firstChild;
+        };
+
+        return dataSource.data.pipe(
+          map((data) => {
+            this.title = data['title'];
+            this.description = data['description'];
+          })
+        )
+      })
+    );
+  }
+
 }
