@@ -34,10 +34,8 @@ export class StorageService {
   }
 
   public removeUser(): void {
-    localStorage.removeItem('jwt');
-    localStorage.removeItem('lang');
-    sessionStorage.removeItem('jwt');
-    sessionStorage.removeItem('lang');
+    localStorage.clear();
+    sessionStorage.clear();
     this.jwt = '';
     this.lang = '';
   }
