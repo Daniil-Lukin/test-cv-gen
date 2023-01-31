@@ -12,6 +12,6 @@ export class AppComponent {
 
   constructor(private translateService: TranslateService, private i18n: NzI18nService) {
     this.translateService.use('en');
-    i18n.setLocale(en_US);
+    this.i18n.setLocale(en_US);
   }
 }

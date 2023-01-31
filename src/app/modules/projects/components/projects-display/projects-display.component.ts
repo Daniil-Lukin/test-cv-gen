@@ -4,13 +4,9 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { Router } from '@angular/router';
-import { DateHelperService } from 'ng-zorro-antd/i18n';
-import { NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
 import { map } from 'rxjs';
 import { ColumnItem } from '../../interfaces/column-item';
 import { DataItem } from '../../interfaces/data-item';
-import { ProjectsToGet } from '../../interfaces/projects-to-get';
 import { ProjectService } from '../../services/project.service';
 
 @Component({
@@ -26,7 +22,6 @@ export class ProjectsDisplayComponent implements OnInit {
 
   constructor(
     private projectService: ProjectService,
-    private router: Router,
     private changeDetectorRef: ChangeDetectorRef
   ) {}
 

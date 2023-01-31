@@ -1,4 +1,4 @@
-<div class="form-container">
+<div class="auth-page">
   <form
     nz-form
     [formGroup]="authForm"
@@ -39,23 +39,26 @@
         <a class="login-form-forgot">{{ "auth.links.forgot" | translate }}</a>
       </div>
     </div>
-    <button
-      nz-button
-      class="login-form-button login-form-margin"
-      [nzType]="'primary'"
-    >
-      {{ "auth.buttons.login" | translate }}
-    </button>
-    {{ "auth.label" | translate }}
-    <a routerLink="/registration">{{ "auth.links.registrate" | translate }}</a>
+    <div class="auth-buttons">
+      <button
+        nz-button
+        class="login-form-button login-form-margin"
+        [nzType]="'primary'"
+      >
+        {{ "auth.buttons.login" | translate }}
+      </button>
+      <div class="registration-link">
+        {{ "auth.label" | translate }}
+        <a routerLink="/registration">{{
+          "auth.links.registrate" | translate
+        }}</a>
+      </div>
+    </div>
   </form>
-</div>
-<div class="button-container">
-  <button id="localization">
+  <button class="icon icon-localization" (click)="localizationButtonClick()">
     <span nz-icon nzType="global" nzTheme="outline"></span>
   </button>
-  <button id="question">
+  <button class="icon icon-question">
     <span nz-icon nzType="question" nzTheme="outline"></span>
   </button>
 </div>
-

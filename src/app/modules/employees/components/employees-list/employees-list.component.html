@@ -1,0 +1,16 @@
+<nz-table #listOfEmployees [nzData]="listOfData">
+  <thead>
+    <tr>
+      <th>{{'employees.employeeList.name' | translate}}</th>
+      <th>{{'employees.employeeList.lastName' | translate}}</th>
+      <th>{{'employees.employeeList.email' | translate}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of listOfEmployees.data" [routerLink]="data.id">
+      <td>{{ data.firstName }}</td>
+      <td>{{ data.lastName }}</td>
+      <td>{{ data.email }}</td>
+    </tr>
+  </tbody>
+</nz-table>

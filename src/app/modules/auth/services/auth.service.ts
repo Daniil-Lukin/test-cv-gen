@@ -10,14 +10,14 @@ import { AuthResponse } from '../interfaces/auth-response';
 export class AuthService {
   constructor(private httpClient: HttpClient) {}
 
-  signIn(identifier: string, password: string): Observable<AuthResponse> {
+  public signIn(identifier: string, password: string): Observable<AuthResponse> {
     return this.httpClient.post<AuthResponse>(
       `${environment.apiUrl}/auth/local`,
       { identifier, password }
     );
   }
 
-  registrate(
+  public registrate(
     username: string,
     email: string,
     password: string

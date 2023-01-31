@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
 
 
 
@@ -25,6 +26,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     AuthRoutingModule,
     TranslateModule,
     NzIconModule,
+    NzNotificationModule,
   ]
 })
 export class AuthModule { }

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { SelectionPageComponent } from './components/selection-page/selection-page.component';
-import { EntitieComponent } from './components/entitie/entitie.component';
+import { EntityComponent } from './components/entity/entity.component';
 
 const routes: Routes = [
   {
@@ -11,7 +11,8 @@ const routes: Routes = [
   },
   {
     path: ':entity',
-    component: EntitieComponent,
+    component: EntityComponent,
+    data: {title: 'headers.title.entities', description: 'headers.description.entities.entity'}
   },
 ];
 

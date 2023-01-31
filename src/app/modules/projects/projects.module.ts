@@ -11,6 +11,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     NzSelectModule,
     NzInputModule,
     NzButtonModule,
+    TranslateModule,
   ]
 })
 export class ProjectsModule { }

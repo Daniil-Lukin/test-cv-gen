@@ -22,5 +22,119 @@
       "repeatPassword": "Пожалуйста, повторите свой пароль корректно!",
       "nameError": "Пожалуйста, введите своё имя!"
     }
+  },
+
+  "home-page": {
+    "slider": {
+      "entities": "Сущности",
+      "employees": "Работники",
+      "projects": "Проекты",
+      "cvs": "CVs"
+    }
+  },
+
+  "entities": {
+    "entity": {
+      "addButton": "+ Добавить сущность", 
+      "emptyList": "Пустой лист"
+    },
+    "modal": {
+      "titleCreate": "Создание новой сущности",
+      "titleEdit": "Изменение сущности {{ name }}",
+      "delete": "Удалить",
+      "cancel": "Отмена",
+      "submit": "Подтвердить"
+    },
+    "selection": {
+      "skills": "Способности",
+      "responsibilities": "Ответственности",
+      "languages": "Языки"
+    }
+  },
+
+  "projects": {
+    "project-info": {
+      "submit": "Поддтвердить изменения",
+      "name": "Имя",
+      "from": "С",
+      "to": "По",
+      "internalName": "Внутреннее имя",
+      "domain": "Домен",
+      "techStack": "Набор технологий",
+      "description": "Описание" 
+    },
+    "project-display": {
+      "create": "Создать новый проект"
+    }
+  },
+
+  "employees": {
+    "employeeDisplay": {
+      "CV": "Резюме",
+      "info": "Информация"
+    },
+    "employeeEdit": {
+      "name": "Имя",
+      "lastName": "Фамилия",
+      "email": "Почта",
+      "save": "Сохранить",
+      "cancel": "Отмена",
+      "errorTip": {
+        "name": "Введите имя",
+        "lastName": "Введите фамилию",
+        "email": "Введите почту"
+      }
+    },
+    "employeeList": {
+      "name": "Имя",
+      "lastName": "Фамилия",
+      "email": "Почта"
+    }
+  },
+
+  "CVs": {
+    "cvChoice": {
+      "addProject": "Добавить проект",
+      "save": "Сохранить",
+      "cancel": "Отмена",
+      "delete": "Удалить",
+      "name": "Имя",
+      "techStack": "Набор технологий",
+      "description": "Описание",
+      "errorTip": {
+        "description": "Заполните описание",
+        "name": "Введите имя"
+      }
+    }
+  },
+  "From": "С",
+  "To": "По",
+  "Name": "Имя",
+  "Domain": "Домен",
+
+  "headers": {
+    "title": {
+      "home": "Домашняя страница",
+      "entities": "Сущности",
+      "projects": "Проекты",
+      "employees": "Работники",
+      "cvs": "Резюме"
+    },
+    "description": {
+      "home": "Стартовая страница приложения",
+      "entities": {
+        "selection-page":"Выберете сущность",
+        "entity": "Создайте или редактируйте сущность"
+      },
+      "projects": {
+        "project-info": "Редактирование проекта",
+        "project-display": "Выберете проект или создайте новый"
+      },
+      "employees": {
+        "employee-display": "Выберете работника для редактирования его данных или создания или редактирования его резюме",
+        "employee-edit": "Редактирование работника и его резюме"
+      },
+      "cvs": "Редактирование или создание резюме"
+    }
   }
 }

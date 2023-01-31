@@ -2,16 +2,13 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Input,
   OnInit,
 } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { EntityData } from 'src/app/modules/entities/interfaces/entity-data';
 import { EntitiesService } from 'src/app/modules/entities/services/entities.service';
-import { ProjectToGet } from '../../interfaces/project-to-get';
-import { ProjectToPost } from '../../interfaces/project-to-post';
 import { ProjectsToGetData } from '../../interfaces/projects-to-get-data';
 import { ProjectService } from '../../services/project.service';
 
@@ -35,7 +32,7 @@ export class ProjectInfoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.entitiesService.getEntity('skills').subscribe((value) => {
+    this.entitiesService.getEntityArrayHTTP('skills').subscribe((value) => {
       this.listOfOptions = value;
     });
 
@@ -80,5 +77,9 @@ export class ProjectInfoComponent implements OnInit {
     this.projectForm.patchValue(other);
     const skillsId = skills.data.map((skill) => skill.id);
     this.projectForm.patchValue({ skills: skillsId });
+  }
+  
+  public setId(newId) {
+    this.id = newId;
   }
 }
