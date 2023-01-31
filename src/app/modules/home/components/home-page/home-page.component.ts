@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { en_US, NzI18nService, ru_RU } from 'ng-zorro-antd/i18n';
-import { enUS, ru } from 'date-fns/locale';
 import { StorageService } from 'src/app/core/services/storage.service';
-import { ActivatedRoute, NavigationEnd, Route, Router } from '@angular/router';
-import { filter, map, switchMap } from 'rxjs';
+import { ActivatedRoute, Data, NavigationEnd, Route, Router } from '@angular/router';
+import { filter, map, Observable, switchMap } from 'rxjs';
+import { NzI18nService } from 'ng-zorro-antd/i18n';
+import config from '../../../../core/extensions/configLanguages'
 
 @Component({
   selector: 'app-home-page',
@@ -21,21 +21,27 @@ export class HomePageComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private translateService: TranslateService,
-    private i18n: NzI18nService
+    private i18n: NzI18nService,
+    private changeDetectorRef: ChangeDetectorRef,
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const {title, description} = this.getLastRouteData();
+    this.title = title;
+    this.description = description;
+    this.changeHeaders().subscribe((data) => {
+      this.title = data['title'];
+      this.description = data['description'];
+      this.changeDetectorRef.markForCheck();
+    })
+  }
 
   localizationButtonClick() {
-    if (this.translateService.store.currentLang === 'en') {
-      this.translateService.use('ru');
-      this.i18n.setLocale(ru_RU);
-      this.i18n.setDateLocale(ru);
-    } else {
-      this.translateService.use('en');
-      this.i18n.setLocale(en_US);
-      this.i18n.setDateLocale(enUS);
-    }
+    let current = this.translateService.currentLang;
+    const {lang, locale, dateLocale} = config[current];
+    this.translateService.use(lang);
+    this.i18n.setLocale(locale);
+    this.i18n.setDateLocale(dateLocale);
   }
 
   public logOut() {
@@ -43,25 +49,25 @@ export class HomePageComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  public changeHeaders() {
+  
+  public changeHeaders(): Observable<Data> {
     return this.router.events.pipe(
       filter((event) => event instanceof NavigationEnd),
-      switchMap(() => {
-        const routerUrl = this.router.url.split('/').slice(2); // -2 потому что массив начинается с ['', 'home']
-        let dataSource = this.activatedRoute;
-
-        for(let i = 0; i < routerUrl.length; i++) {
-          dataSource = dataSource?.firstChild;
-        };
-
-        return dataSource.data.pipe(
-          map((data) => {
-            this.title = data['title'];
-            this.description = data['description'];
-          })
-        )
+      map(() => {
+        return this.getLastRouteData()
       })
     );
+  }
+
+  private getLastRouteData(): Data {
+    const routerUrl = this.router.url.split('/').slice(2); // -2 потому что массив начинается с ['', 'home']
+    let dataSource = this.activatedRoute;
+
+    for(let i = 0; i < routerUrl.length; i++) {
+      dataSource = dataSource?.firstChild;
+    };
+
+    return dataSource.snapshot.data;
   }
 
 }

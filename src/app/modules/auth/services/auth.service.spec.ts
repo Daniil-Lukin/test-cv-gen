@@ -41,7 +41,7 @@ describe('AuthService', () => {
 
   it('should return user', () => {
     service.signIn('foo.bar@strapi.io','123').subscribe(
-      res => expect(res).toEqual(mockResponse, 'should work'),
+      res => expect(res).toEqual(mockResponse),
     );
     const req = httpMock.expectOne(`${environment.apiUrl}/auth/local`);
     expect(req.request.method).toEqual('POST');

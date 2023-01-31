@@ -1,19 +1,17 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, forkJoin, map, Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { EntityData } from '../interfaces/entity-data';
-import { ForkJoinResponse } from '../interfaces/fork-join-response';
 import { SkillsResponse } from '../interfaces/skills-response';
-import { Entities } from '../enums/entities.enum';
 import { EntityToGet } from '../interfaces/entity-to-get';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EntitiesService {
-  constructor(private httpClient: HttpClient, private router: Router) {}
+  constructor(private httpClient: HttpClient) {}
 
   public getEntityHTTP(
     id: number,
