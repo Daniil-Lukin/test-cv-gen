@@ -30,9 +30,9 @@ export class HomePageComponent implements OnInit {
     this.title = title;
     this.description = description;
     this.changeHeaders().subscribe((data) => {
+      this.changeDetectorRef.markForCheck();
       this.title = data['title'];
       this.description = data['description'];
-      this.changeDetectorRef.markForCheck();
     })
   }
 

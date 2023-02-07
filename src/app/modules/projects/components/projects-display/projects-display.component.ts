@@ -42,8 +42,8 @@ export class ProjectsDisplayComponent implements OnInit {
         })
       )
       .subscribe((response) => {
-        this.listOfData = response;
         this.changeDetectorRef.markForCheck();
+        this.listOfData = response;
       });
     this.fillTableColumns();
   }

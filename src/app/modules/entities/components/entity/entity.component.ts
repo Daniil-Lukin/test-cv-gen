@@ -35,8 +35,8 @@ export class EntityComponent implements OnInit {
     this.entitiesService
       .getEntityArrayHTTP(this.entityType)
       .subscribe((value) => {
-        this.entitiesArray = value;
         this.changeDetectionRef.markForCheck();
+        this.entitiesArray = value;
       });
   }
 

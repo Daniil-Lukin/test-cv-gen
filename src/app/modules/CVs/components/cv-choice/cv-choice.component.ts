@@ -50,10 +50,11 @@ export class CvChoiceComponent implements OnInit {
 
   ngOnInit(): void {
     this.cvService.getAllCvHTTP().subscribe((cvs) => {
-      this.cvList = cvs.data;
       this.changeDetectorRef.markForCheck();
+      this.cvList = cvs.data;
     });
     this.entitiesService.getEntityArrayHTTP('skills').subscribe((value) => {
+      this.changeDetectorRef.markForCheck();
       this.listOfOptions = value;
     });
     this.cvForm = this.formBuilder.group({
