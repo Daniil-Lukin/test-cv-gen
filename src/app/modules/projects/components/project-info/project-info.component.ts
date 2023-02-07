@@ -7,9 +7,9 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { EntityData } from 'src/app/modules/entities/interfaces/entity-data';
+import { EntityData } from '../../../../core/interfaces/entities-interfaces/entity-data';
 import { EntitiesService } from 'src/app/modules/entities/services/entities.service';
-import { ProjectsToGetData } from '../../interfaces/projects-to-get-data';
+import { ProjectsToGetData } from '../../../../core/interfaces/project-interfaces/projects-to-get-data';
 import { ProjectService } from '../../services/project.service';
 
 @Component({

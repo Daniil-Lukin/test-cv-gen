@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { EmployeeToGet } from '../interfaces/employee-interfaces/employee-to-get';
-import { EmployeeToPost } from '../interfaces/employee-interfaces/employee-to-post';
-import { EmployeesToGet } from '../interfaces/employee-interfaces/employees-to-get';
+import { EmployeeToGet } from '../../../core/interfaces/employee-interfaces/employee-to-get';
+import { EmployeeToPost } from '../../../core/interfaces/employee-interfaces/employee-to-post';
+import { EmployeesToGet } from '../../../core/interfaces/employee-interfaces/employees-to-get';
 ;
 
 @Injectable({

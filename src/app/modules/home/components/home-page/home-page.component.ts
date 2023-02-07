@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { StorageService } from 'src/app/core/services/storage.service';
-import { ActivatedRoute, Data, NavigationEnd, Route, Router } from '@angular/router';
-import { filter, map, Observable, switchMap } from 'rxjs';
+import { ActivatedRoute, Data, NavigationEnd, Router } from '@angular/router';
+import { filter, map, Observable } from 'rxjs';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
 import config from '../../../../core/extensions/configLanguages'
 

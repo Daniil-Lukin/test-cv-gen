@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { map } from 'rxjs';
-import { EmployeeTable } from '../../interfaces/employee-interfaces/employee-table';
+import { EmployeeTable } from '../../../../core/interfaces/employee-interfaces/employee-table';
 import { EmployeesService } from '../../services/employees.service';
 
 @Component({

@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 import { Observable } from 'rxjs';
 import { EntitiesService } from '../../services/entities.service';
@@ -18,7 +17,6 @@ export class ModalEditComponent {
   constructor(
     private nzModalRef: NzModalRef,
     private entitiesService: EntitiesService,
-    private activatedRoute: ActivatedRoute
   ) {}
 
   public submitClick(): void {
