@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { filter, switchMap } from 'rxjs';
-import { EntityData } from '../../interfaces/entity-data';
+import { EntityData } from '../../../../core/interfaces/entities-interfaces/entity-data';
 import { EntitiesService } from '../../services/entities.service';
 import { ModalEditComponent } from '../modal-edit/modal-edit.component';
 
@@ -35,8 +35,8 @@ export class EntityComponent implements OnInit {
     this.entitiesService
       .getEntityArrayHTTP(this.entityType)
       .subscribe((value) => {
-        this.entitiesArray = value;
         this.changeDetectionRef.markForCheck();
+        this.entitiesArray = value;
       });
   }
 

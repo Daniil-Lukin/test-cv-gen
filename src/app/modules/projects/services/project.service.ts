@@ -2,10 +2,10 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { ProjectsToGet } from '../interfaces/projects-to-get';
-import { ProjectToPost } from '../interfaces/project-to-post';
-import { ProjectsToGetData } from '../interfaces/projects-to-get-data';
-import { ProjectToGet } from '../interfaces/project-to-get';
+import { ProjectsToGet } from '../../../core/interfaces/project-interfaces/projects-to-get';
+import { ProjectToPost } from '../../../core/interfaces/project-interfaces/project-to-post';
+import { ProjectsToGetData } from '../../../core/interfaces/project-interfaces/projects-to-get-data';
+import { ProjectToGet } from '../../../core/interfaces/project-interfaces/project-to-get';
 
 @Injectable({
   providedIn: 'root',

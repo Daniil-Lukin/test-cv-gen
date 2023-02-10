@@ -5,8 +5,8 @@ import {
   OnInit,
 } from '@angular/core';
 import { map } from 'rxjs';
-import { ColumnItem } from '../../interfaces/column-item';
-import { DataItem } from '../../interfaces/data-item';
+import { ColumnItem } from '../../../../core/interfaces/project-interfaces/column-item';
+import { DataItem } from '../../../../core/interfaces/project-interfaces/data-item';
 import { ProjectService } from '../../services/project.service';
 
 @Component({
@@ -42,8 +42,8 @@ export class ProjectsDisplayComponent implements OnInit {
         })
       )
       .subscribe((response) => {
-        this.listOfData = response;
         this.changeDetectorRef.markForCheck();
+        this.listOfData = response;
       });
     this.fillTableColumns();
   }

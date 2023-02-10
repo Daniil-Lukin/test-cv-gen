@@ -1,4 +1,4 @@
-import { CvAttributes } from "../cv-interfaces/cv-attributes";
+import { CvAttributes } from "../cv-attributes";
 
 export interface CvToGetData {
   id: number;

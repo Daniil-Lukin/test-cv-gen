@@ -6,10 +6,9 @@ import {
   OnInit,
 } from '@angular/core';
 import { NzModalRef } from 'ng-zorro-antd/modal';
-import { ProjectsToGet } from 'src/app/modules/projects/interfaces/projects-to-get';
-import { ProjectsToGetData } from 'src/app/modules/projects/interfaces/projects-to-get-data';
+import { ProjectsToGet } from 'src/app/core/interfaces/project-interfaces/projects-to-get';
 import { ProjectService } from 'src/app/modules/projects/services/project.service';
-import { CheckboxGroup } from '../../interfaces/checkbox-group';
+import { CheckboxGroup } from '../../../../core/interfaces/cv-interfaces/checkbox-group';
 
 @Component({
   selector: 'app-project-choice-modal',

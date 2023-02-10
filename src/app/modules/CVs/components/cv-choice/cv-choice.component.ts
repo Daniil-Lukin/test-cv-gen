@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { CvToGetData } from '../../interfaces/cv-to-get-interfaces/cv-to-get-data';
+import { CvToGetData } from '../../../../core/interfaces/cv-interfaces/cv-to-get-interfaces/cv-to-get-data';
 import { CvService } from '../../services/cv-service.service';
 import { ProjectChoiceModalComponent } from '../project-choice-modal/project-choice-modal.component';
 import {
@@ -17,10 +17,10 @@ import {
 } from 'rxjs';
 import { ProjectService } from 'src/app/modules/projects/services/project.service';
 import { EntitiesService } from 'src/app/modules/entities/services/entities.service';
-import { ProjectsForkJoin } from '../../interfaces/projects-fork-join';
-import { ProjectToGet } from 'src/app/modules/projects/interfaces/project-to-get';
-import { EntityData } from 'src/app/modules/entities/interfaces/entity-data';
-import { CvToGet } from '../../interfaces/cv-interfaces/cv-to-get';
+import { ProjectsForkJoin } from '../../../../core/interfaces/project-interfaces/projects-fork-join';
+import { ProjectToGet } from '../../../../core/interfaces/project-interfaces/project-to-get';
+import { EntityData } from '../../../../core/interfaces/entities-interfaces/entity-data';
+import { CvToGet } from '../../../../core/interfaces/cv-interfaces/cv-to-get';
 
 @Component({
   selector: 'app-cv-edit',
@@ -50,10 +50,11 @@ export class CvChoiceComponent implements OnInit {
 
   ngOnInit(): void {
     this.cvService.getAllCvHTTP().subscribe((cvs) => {
-      this.cvList = cvs.data;
       this.changeDetectorRef.markForCheck();
+      this.cvList = cvs.data;
     });
     this.entitiesService.getEntityArrayHTTP('skills').subscribe((value) => {
+      this.changeDetectorRef.markForCheck();
       this.listOfOptions = value;
     });
     this.cvForm = this.formBuilder.group({

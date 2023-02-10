@@ -1,5 +1,5 @@
-import { EntityData } from "../../entities/interfaces/entity-data";
-import { SkillsResponse } from "../../entities/interfaces/skills-response";
+import { EntityData } from "../entities-interfaces/entity-data";
+import { SkillsResponse } from "../entities-interfaces/skills-response";
 
 export interface ProjectsToGetData {
     id?: number;

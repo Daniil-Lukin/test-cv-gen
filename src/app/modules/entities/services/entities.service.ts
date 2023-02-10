@@ -1,11 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { EntityData } from '../interfaces/entity-data';
-import { SkillsResponse } from '../interfaces/skills-response';
-import { EntityToGet } from '../interfaces/entity-to-get';
+import { EntityData } from '../../../core/interfaces/entities-interfaces/entity-data';
+import { SkillsResponse } from '../../../core/interfaces/entities-interfaces/skills-response';
+import { EntityToGet } from '../../../core/interfaces/entities-interfaces/entity-to-get';
 
 @Injectable({
   providedIn: 'root',
