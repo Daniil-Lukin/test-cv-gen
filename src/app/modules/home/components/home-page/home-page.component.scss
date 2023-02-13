@@ -1,0 +1,55 @@
+.ant-layout {
+  height: 100%;
+  width: 100%;
+}
+
+.logo {
+  width: 7.5rem;
+  height: 2rem;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 1rem 1.8rem 1rem 0;
+  float: left;
+}
+
+.header-menu {
+  display: flex;
+  flex-direction: row-reverse;
+  line-height: 4rem;
+}
+
+.sider-menu {
+  height: 100%;
+  border-right: 0;
+  box-shadow: 0 0.125rem 0.5rem;
+}
+
+
+nz-content {
+  background: #fff;
+  margin: 1.25rem 1.5rem 0 1.5rem;
+  padding: 1.5rem;
+  min-height: 17.5rem;
+  max-height: 100%;
+  overflow: auto;
+}
+
+.description-container {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  height: 8.5rem;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  h2, h3 {
+    margin: 0
+  }
+}
+
+.ant-layout-sider-light .ant-layout-sider-trigger {
+  color: rgba(0, 0, 0, 0.85);
+  background: #fff;
+  position: absolute;
+}
+

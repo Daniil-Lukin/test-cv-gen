@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './modules/shared/guards/auth.guard';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -16,8 +16,9 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () =>
-      import('./modules/cv-page/cv-page.module').then((m) => m.CvPageModule),
+      import('./modules/home/home-page.module').then((m) => m.HomePageModule),
     canActivate: [AuthGuard],
+    data: {title: 'headers.title.home', description: 'headers.description.home'}
   },
   
 ];

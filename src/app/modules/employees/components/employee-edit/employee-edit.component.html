@@ -1,0 +1,29 @@
+<div class="form-wrapper">
+  <form nz-form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+    <nz-form-item>
+      <!-- Name -->
+      <nz-form-label>{{'employees.employeeEdit.name' | translate}}</nz-form-label>
+      <nz-form-control [nzErrorTip]="'employees.employeeEdit.errorTip.name' | translate">
+        <input nz-input formControlName="firstName" type="text">
+      </nz-form-control>
+    </nz-form-item>
+    <!-- last name -->
+    <nz-form-item>
+      <nz-form-label>{{'employees.employeeEdit.lastName' | translate}}</nz-form-label>
+      <nz-form-control [nzErrorTip]="'employees.employeeEdit.errorTip.lastName' | translate">
+        <input nz-input formControlName="lastName" type="text">
+      </nz-form-control>
+    </nz-form-item>
+    <!-- email -->
+    <nz-form-item>
+      <nz-form-label>{{'employees.employeeEdit.email' | translate}}</nz-form-label>
+      <nz-form-control [nzErrorTip]="'employees.employeeEdit.errorTip.email' | translate">
+        <input nz-input formControlName="email" type="text">
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>
+<div class="button-wrapper">
+  <button nz-button nzType="primary" (click)="onSubmit()">{{'employees.employeeEdit.save' | translate}}</button>
+  <button nz-button (click)="onCancelClick()">{{'employees.employeeEdit.cancel' | translate}}</button>
+</div>

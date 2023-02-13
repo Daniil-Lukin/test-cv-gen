@@ -11,16 +11,17 @@ import {
   MissingTranslationHandler,
   TranslateLoader,
   TranslateModule,
-  TranslateService,
 } from '@ngx-translate/core';
-import { HttpLoaderFactory } from './modules/shared/extensions/httpLoaderFactory';
-import { MissingTranslationService } from './modules/shared/extensions/translationErrorHandler';
-import { en_US, NZ_I18N, ru_RU } from 'ng-zorro-antd/i18n';
+import { HttpLoaderFactory } from './core/extensions/httpLoaderFactory';
+import { MissingTranslationService } from './core/extensions/translationErrorHandler';
+import { en_US, NZ_DATE_LOCALE, NZ_I18N, ru_RU } from 'ng-zorro-antd/i18n';
 import en from '@angular/common/locales/en';
 import ru from '@angular/common/locales/ru';
 import { registerLocaleData } from '@angular/common';
-import { StorageService } from './modules/shared/services/storage.service';
-import { JwtInterceptor } from './modules/shared/interceptors/jwt-interceptor.interceptor';
+import { StorageService } from './core/services/storage.service';
+import { JwtInterceptor } from './core/interceptors/jwt-interceptor.interceptor';
+import { enUS } from 'date-fns/locale';
+import { NotificationInterceptor } from './core/interceptors/notification.interceptor';
 registerLocaleData(en);
 registerLocaleData(ru);
 
@@ -87,12 +88,12 @@ registerLocaleData(ru);
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
       multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: NotificationInterceptor,
+      multi: true,
     }
-    // {
-    //   provide: LOCALE_ID,
-    //   useFactory: (translateService) => () => { если в сторедже есть ланг то ставим, если нет, то дефлот
-    // }
-    // }
   ],
   bootstrap: [AppComponent],
 })

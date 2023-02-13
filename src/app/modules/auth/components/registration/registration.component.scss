@@ -1,23 +1,26 @@
-.form-container {
-  height: 100%;
-  width: 100%;
+.auth-page {
+  position: relative;
+  height: 100vh;
+  padding: 0 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
-}
+  background: url('../../../../../assets/images/bg.png') #F0F2F5;
 
-.login-form {
-  width: 18.75%;
-}
 
-.login-form-margin {
-  margin-bottom: 1rem;
-}
+  form.login-form {
+    width: 22.5rem;
+    
+    .ant-row.login-form-margin {
+      margin-bottom: 1.375rem;
 
-.login-form-forgot {
-  float: right;
-}
+    }
 
-.login-form-button {
-  width: 100%;
+    button {
+      width: 100%;
+    }
+  }
+
+  
+
 }

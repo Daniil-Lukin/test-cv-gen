@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { NzI18nService, en_US } from 'ng-zorro-antd/i18n';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,8 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppComponent {
   title = 'cv-gen';
 
-  constructor(private translateService: TranslateService) {
+  constructor(private translateService: TranslateService, private i18n: NzI18nService) {
     this.translateService.use('en');
+    this.i18n.setLocale(en_US);
   }
 }

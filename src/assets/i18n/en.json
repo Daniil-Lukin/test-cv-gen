@@ -22,5 +22,119 @@
       "passwordRepeat": "Please repeat your Password correctly!",
       "nameError": "Please input your name!"
     }
+  },
+
+  "home-page": {
+    "slider": {
+      "entities": "Entities",
+      "employees": "Employees",
+      "projects": "Projects",
+      "cvs": "CVs"
+    }
+  },
+
+  "entities": {
+    "entity": {
+      "addButton": "+ Add entity", 
+      "emptyList": "Empty list"
+    },
+    "modal": {
+      "titleCreate": "Create new entity",
+      "titleEdit": "Editing {{ name }} entity",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "submit": "Submit"
+    },
+    "selection": {
+      "skills": "Skills",
+      "responsibilities": "Responsibilities",
+      "languages": "Languages"
+    }
+  },
+
+  "projects": {
+    "project-info": {
+      "submit": "Submit changes",
+      "name": "Name",
+      "from": "From",
+      "to": "To",
+      "internalName": "Internal Name",
+      "domain": "Domain",
+      "techStack": "Tech Stack",
+      "description": "Description" 
+    },
+    "project-display": {
+      "create": "Create new project"
+    }
+  },
+
+  "employees": {
+    "employeeDisplay": {
+      "CV": "CV",
+      "info": "Info"
+    },
+    "employeeEdit": {
+      "name": "Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "save": "Save",
+      "cancel": "Cancel",
+      "errorTip": {
+        "name": "Fill the name",
+        "lastName": "Fill the last name",
+        "email": "Fill the email"
+      }
+    },
+    "employeeList": {
+      "name": "Name",
+      "lastName": "Last Name",
+      "email": "Email"
+    }
+  },
+
+  "CVs": {
+    "cvChoice": {
+      "addProject": "Add project",
+      "save": "Save",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "name": "Name",
+      "techStack": "Tech Stack",
+      "description": "Description",
+      "errorTip": {
+        "description": "Fill the description",
+        "name": "Fill the name"
+      }
+    }
+  },
+  "From": "From",
+  "To": "To",
+  "Name": "Name",
+  "Domain": "Domain",
+
+  "headers": {
+    "title": {
+      "home": "Home page",
+      "entities": "Entities page",
+      "projects": "Projects page",
+      "employees": "Employees page",
+      "cvs": "CV page"
+    },
+    "description": {
+      "home": "Starting page of application",
+      "entities": {
+        "selection-page":"Chose entity type",
+        "entity": "Create or edit entities"
+      },
+      "projects": {
+        "project-info": "Edit project",
+        "project-display": "Chose one project to edit it or create new"
+      },
+      "employees": {
+        "employee-display": "Chose one employee to edit his data or to create or edit CV",
+        "employee-edit": "Edit employee and his CV"
+      },
+      "cvs": "Create or edit CV"
+    }
   }
 }

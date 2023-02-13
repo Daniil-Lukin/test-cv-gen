@@ -1,11 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { NzModalRef } from 'ng-zorro-antd/modal';
-import { Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { EntitiesService } from '../../services/entities.service';
 
 @Component({
@@ -16,6 +11,7 @@ import { EntitiesService } from '../../services/entities.service';
 })
 export class ModalEditComponent {
   @Input() id: number;
+  @Input() entityType: string;
   public newName: string;
 
   constructor(
@@ -24,18 +20,26 @@ export class ModalEditComponent {
   ) {}
 
   public submitClick(): void {
+    let observable: Observable<unknown>;
     if (this.id) {
-      this.entitiesService.changeEntity(this.newName, this.id).subscribe();
+      observable = this.entitiesService.changeEntityHTTP(
+        this.newName,
+        this.id,
+        this.entityType
+      );
     } else {
-      this.entitiesService.createEntity(this.newName).subscribe();
+      observable = this.entitiesService.createEntityHTTP(
+        this.newName,
+        this.entityType
+      );
     }
-    this.destroyModal(true);
+    observable.subscribe(() => this.destroyModal(true));
   }
 
   public deleteClick(): void {
     this.entitiesService
-      .deleteEntity(this.id)
-    this.destroyModal(true);
+      .deleteEntityHTTP(this.id, this.entityType)
+      .subscribe(() => this.destroyModal(true));
   }
 
   public destroyModal(isChanged = false): void {

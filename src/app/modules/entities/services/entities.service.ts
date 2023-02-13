@@ -1,110 +1,67 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import {
-  BehaviorSubject,
-  catchError,
-  forkJoin,
-  map,
-  Observable,
-  raceWith,
-  switchMap,
-  throwError,
-} from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { EntitiesStorage } from '../interfaces/entities-storage';
-import { EntityData } from '../interfaces/entity-data';
-import { ForkJoinResponse } from '../interfaces/fork-join-response';
-import { SkillsResponse } from '../interfaces/skills-response';
-
-enum entities {
-  skills,
-  responsibilities,
-  languages,
-}
+import { EntityData } from '../../../core/interfaces/entities-interfaces/entity-data';
+import { SkillsResponse } from '../../../core/interfaces/entities-interfaces/skills-response';
+import { EntityToGet } from '../../../core/interfaces/entities-interfaces/entity-to-get';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EntitiesService {
-  private _entityType: string; //skills responsibillities languages
-  private entitiesStorage = {
-    skills: new BehaviorSubject([]),
-    responsibilities: new BehaviorSubject([]),
-    languages: new BehaviorSubject([]),
+  constructor(private httpClient: HttpClient) {}
+
+  public getEntityHTTP(
+    id: number,
+    entityType = 'skills'
+  ): Observable<EntityToGet> {
+    const params = new HttpParams({
+      fromObject: { 'pagination[withCount]': false },
+    });
+    return this.httpClient.get<EntityToGet>(
+      `${environment.apiUrl}/${entityType}/${id}`,
+      { params }
+    );
   }
-  private entitiesTypes = ['skills', 'responsibilities', 'languages'];
 
-  constructor(private httpClient: HttpClient, private router: Router) {}
-
-  public setEntityType(): void {
-    this._entityType = this.router.url.split('/').pop();
-    console.log(this._entityType);
-  }
-
-  public getEntityArray(
-    entityType = this._entityType
-  ): Observable<EntityData[]> {
+  public getEntityArrayHTTP(entityType = 'skills'): Observable<EntityData[]> {
+    const params = new HttpParams({
+      fromObject: { 'pagination[withCount]': false },
+    });
     return this.httpClient
-      .get<SkillsResponse>(
-        `${environment.apiUrl}/${entityType}?pagination%5BwithCount%5D=false`
-      )
+      .get<SkillsResponse>(`${environment.apiUrl}/${entityType}`, { params })
       .pipe(
         map((response) => {
-          this.updateStoragedData(response.data, entityType);
           return response.data;
-          })
-        );
+        })
+      );
   }
 
-  public createEntity(name: string): Observable<SkillsResponse> {
+  public createEntityHTTP(
+    name: string,
+    entityType = 'skills'
+  ): Observable<SkillsResponse> {
     return this.httpClient.post<SkillsResponse>(
-      `${environment.apiUrl}/${this._entityType}`,
+      `${environment.apiUrl}/${entityType}`,
       { data: { name } }
     );
   }
 
-  public changeEntity(name: string, id: number): Observable<SkillsResponse> {
-    return this.httpClient
-      .put<SkillsResponse>(`${environment.apiUrl}/${this._entityType}/${id}`, {
+  public changeEntityHTTP(
+    name: string,
+    id: number,
+    entityType: string
+  ): Observable<SkillsResponse> {
+    return this.httpClient.put<SkillsResponse>(
+      `${environment.apiUrl}/${entityType}/${id}`,
+      {
         data: { name },
-      })
-  }
-
-  public deleteEntity(id: number) {
-    return this.httpClient.delete(
-      `${environment.apiUrl}/${this._entityType}/${id}`
+      }
     );
   }
 
-  public get entityType(): string {
-    return this._entityType;
-  }
-
-  public getEntitiesData(): Observable<ForkJoinResponse> {
-    return forkJoin({
-      skills: this.getEntityArray('skills'),
-      languages: this.getEntityArray('languages'),
-      responsibilities: this.getEntityArray('responsibilities'),
-    })
-  }
-
-  public setEntitiesData(response: ForkJoinResponse): void {
-    for(let type of this.entitiesTypes) {
-      console.log(this.entitiesTypes);
-      this.entitiesStorage[type].next(response[type]);
-      console.log(this.entitiesStorage);
-    }
-  }
-
-  private updateStoragedData(
-    entityData: EntityData[],
-    entityType = this.entityType
-  ): void {
-    this.entitiesStorage[entityType].next(entityData);
-  }
-
-  public getEntity(entityType = this.entityType): BehaviorSubject<any>{
-    return this.entitiesStorage[entityType];
+  public deleteEntityHTTP(id: number, entityType: string) {
+    return this.httpClient.delete(`${environment.apiUrl}/${entityType}/${id}`);
   }
 }
